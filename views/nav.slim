@@ -1,0 +1,21 @@
+#header_wrapper
+  nav id='menu'
+    ul
+      - if current_page?
+        li class="current_page_item"
+          a href='/' id='home'  Home
+      - else
+        li
+          a href='/' id='home'  Home
+      - if current_page?('search')
+        li class='current_page_item'
+          a href='/search' id='search'  Search
+      - else
+        li
+          a href='/search' id='search'  Search
+      - if current_page?('group')
+        li class='current_page_item'
+          a href='/group' id='group'  Groups
+      - else
+        li
+          a href='/group' id='group'  Groups

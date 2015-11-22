@@ -1,0 +1,187 @@
+html, body
+{
+	height: 100%;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 12pt;
+	font-weight: 400;
+	color: #000000;
+}
+
+h1, h2, h3 {
+	margin: 0;
+	padding: 0;
+}
+
+p, ol, ul {
+	margin-top: 0;
+}
+
+ol, ul {
+	padding: 0;
+	list-style: none;
+}
+
+p {
+	line-height: 180%;
+}
+
+a
+{
+	color: #0000FF;
+}
+
+a.lightlink {
+	color: #DDDDDD;
+}
+
+table, th, td
+{
+	text-align: center;
+	background: #FAFAFA;
+}
+
+table.center {
+	align: center;
+	width: 80%;
+	clear: both;
+}
+
+textarea.tutorial {
+	rows: 10;
+	cols: 35;
+}
+
+section {
+	background: #EDEDED;
+}
+
+div.flash {
+	text-align: center;
+	color: #FFFFFF;
+	font-weight: bold;
+	background: #FF0000;
+}
+
+/*Header*/
+
+#header_wrapper {
+	overflow: hidden;
+	padding: 5em 0em;
+	background: #8DCB89 url(header.jpg) no-repeat center;
+	background-size: cover;
+}
+
+/*Menu*/
+#menu ul
+{
+	text-align: center;
+}
+
+#menu li
+{
+	display: inline-block;
+}
+
+#menu li a, #menu li span
+{
+	display: inline-block;
+	margin-left: 0.50em;
+	padding: 1em 1.5em;
+	letter-spacing: 0.20em;
+	text-decoration: none;
+	font-size: 0.90em;
+	font-weight: 600;
+	text-transform: uppercase;
+	outline: 0;
+	color: #FFF;
+}
+
+#menu .current_page_item a
+{
+	background: #ff6816;
+	border-radius: 8px;
+	color: #FFF;
+}
+
+/*Title*/
+
+.title
+{
+	margin-bottom: 3em;
+}
+
+.title h2
+{
+	font-size: 2.8em;
+}
+
+.title .byline
+{
+	letter-spacing: 0.15em;
+	text-transform: uppercase;
+	font-weight: 400;
+	font-size: 1.1em;
+	color: #6F6F6F;
+}
+
+.container
+{
+	text-align: center;
+	margin: 0px auto;
+	width: 800px;
+	overflow: hidden;
+	padding: 5em 0em;
+	color: rgba(0,0,0,0.5);
+}
+
+.float-clear
+{
+	clear: both;
+	width: 300;
+	text-align: center;
+}
+
+
+/*********************************************************************************/
+/* Form Style                                                                    */
+/*********************************************************************************/
+form label
+{
+	display: block;
+	margin-bottom: 0.5em;
+}
+
+form .submit
+{
+	background: #8DCB89;
+	border-radius: 3px;
+}
+
+form .delete
+{
+	background: #A00000;
+	border-radius: 3px;
+}
+
+.footer {
+	overflow: hidden;
+	padding: 5em 0em;
+	background: url(header.jpg) center;
+	border-top: 1px solid rgba(255,255,255,0.08);
+	text-align: center;
+	color: white;
+}
+
+.user-input {
+	float: left;
+	width: 40%;
+}
+
+.user-output {
+	float: left;
+}

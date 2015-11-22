@@ -1,0 +1,17 @@
+.container
+
+  -if @goodlist
+    table class='left'
+      tbody
+        tr
+          th ID
+          th updated_time
+          th message
+        -@goodlist.each do |good|
+          tr
+            td
+              = good["ID"]
+            td width='200'
+              = good["刊登時間"]
+            td width='1000'
+              = good["商品資訊"]

@@ -1,0 +1,13 @@
+doctype 5
+html
+  head
+    title Smartibuy information
+    link rel='stylesheet' type='text/css' href='/style.css'
+  body
+    header
+      == slim :nav
+    section
+      == styled_flash
+      == yield
+    .footer
+      == slim :footer
