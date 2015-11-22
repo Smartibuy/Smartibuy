@@ -7,7 +7,6 @@ require 'slim'
 
 class ApplicationController < Sinatra::Base
 
-  helpers GoodsHelpers
   enable :sessions
   register Sinatra::Flash
   use Rack::MethodOverride
@@ -82,7 +81,7 @@ class ApplicationController < Sinatra::Base
 
   search_good_by_group = lambda do
     group_id = params[:group_id]
-    puts 'Group id: ' << group_id
+    puts 'group id: ' << group_id
     redirect "/group/#{group_id}"
   end
 
