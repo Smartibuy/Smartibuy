@@ -9,11 +9,11 @@ head
   link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
   link rel='stylesheet' type='text/css' href="css/style.css"
   title Smartibuy!
-  body
-    == slim :nav
+body
+  == slim :nav
 
-    == styled_flash
-    == yield
+  == styled_flash
+  == yield
 
-    .footer
-    == slim :footer
+  .footer
+  == slim :footer
