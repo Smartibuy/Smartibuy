@@ -9,9 +9,21 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
           a.navbar-brand href="#"  Smartibuy
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav
-            li
-              a href="#"  About
-            li
-              a href="#"  Search
-            li
-              a href="#"  Create
+            - if current_page?
+              li
+                a href='/' Home
+            - else
+              li
+                a href='/' Home
+            - if current_page?('search')
+              li
+                a href='/search' Search
+            - else
+              li
+                a href='/search' Search
+            - if current_page?('group')
+              li class='current_page_item'
+                a href='/group' Groups
+            - else
+              li
+                a href='/group' Groups
