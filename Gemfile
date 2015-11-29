@@ -8,7 +8,7 @@ gem 'hirb'
 gem 'virtus'
 
 gem 'httparty'
-
+gem 'sinatra-activerecord'
 gem 'sinatra-flash'
 gem 'slim'
 gem 'tilt'
