@@ -1,19 +1,19 @@
 doctype 5
 html
-head
-  meta charset="utf-8"
-  meta content="IE=edge" http-equiv="X-UA-Compatible"
-  meta content="width=device-width, initial-scale=1" name="viewport"
-  meta content="" name="description"
-  meta content="" name="author"
-  link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-  link rel='stylesheet' type='text/css' href="css/style.css"
-  title Smartibuy!
-body
-  == slim :nav
+  head
+    meta charset="utf-8"
+    meta content="IE=edge" http-equiv="X-UA-Compatible"
+    meta content="width=device-width, initial-scale=1" name="viewport"
+    meta content="" name="description"
+    meta content="" name="author"
+    link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    link rel='stylesheet' type='text/css' href="css/style.css"
+    title Smartibuy!
+  body
+    == slim :nav
 
-  == styled_flash
-  == yield
+    == styled_flash
+    == yield
 
-  .footer
-  == slim :footer
+    .footer
+    == slim :footer
