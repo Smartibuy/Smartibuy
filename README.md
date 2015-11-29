@@ -1,7 +1,7 @@
 Website of Smartibuy
 ==
 This is source code of website of Smartibuy.
-http://smartibuyweb.herokuapp.com/
+http://smartibuy.herokuapp.com/
 
 LICENSE
 ==
