@@ -1,187 +1,54 @@
-html, body
-{
-	height: 100%;
-}
+/*!
+ * Start Bootstrap - Shop Homepage HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
 
 body {
-	margin: 0px;
-	padding: 0px;
-	font-family: 'Source Sans Pro', sans-serif;
-	font-size: 12pt;
-	font-weight: 400;
-	color: #000000;
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
-h1, h2, h3 {
-	margin: 0;
-	padding: 0;
+.slide-image {
+    width: 100%;
 }
 
-p, ol, ul {
-	margin-top: 0;
+.carousel-holder {
+    margin-bottom: 30px;
 }
 
-ol, ul {
-	padding: 0;
-	list-style: none;
+.carousel-control,
+.item {
+    border-radius: 4px;
 }
 
-p {
-	line-height: 180%;
+.caption {
+    height: 130px;
+    overflow: hidden;
 }
 
-a
-{
-	color: #0000FF;
+.caption h4 {
+    white-space: nowrap;
 }
 
-a.lightlink {
-	color: #DDDDDD;
+.thumbnail img {
+    width: 100%;
 }
 
-table, th, td
-{
-	text-align: center;
-	background: #FAFAFA;
+.ratings {
+    padding-right: 10px;
+    padding-left: 10px;
+    color: #d17581;
 }
 
-table.center {
-	align: center;
-	width: 80%;
-	clear: both;
+.thumbnail {
+    padding: 0;
 }
 
-textarea.tutorial {
-	rows: 10;
-	cols: 35;
+.thumbnail .caption-full {
+    padding: 9px;
+    color: #333;
 }
 
-section {
-	background: #EDEDED;
-}
-
-div.flash {
-	text-align: center;
-	color: #FFFFFF;
-	font-weight: bold;
-	background: #FF0000;
-}
-
-/*Header*/
-
-#header_wrapper {
-	overflow: hidden;
-	padding: 5em 0em;
-	background: #8DCB89 url(../images/header.jpg) no-repeat center;
-	background-size: cover;
-}
-
-/*Menu*/
-#menu ul
-{
-	text-align: center;
-}
-
-#menu li
-{
-	display: inline-block;
-}
-
-#menu li a, #menu li span
-{
-	display: inline-block;
-	margin-left: 0.50em;
-	padding: 1em 1.5em;
-	letter-spacing: 0.20em;
-	text-decoration: none;
-	font-size: 0.90em;
-	font-weight: 600;
-	text-transform: uppercase;
-	outline: 0;
-	color: #FFF;
-}
-
-#menu .current_page_item a
-{
-	background: #ff6816;
-	border-radius: 8px;
-	color: #FFF;
-}
-
-/*Title*/
-
-.title
-{
-	margin-bottom: 3em;
-}
-
-.title h2
-{
-	font-size: 2.8em;
-}
-
-.title .byline
-{
-	letter-spacing: 0.15em;
-	text-transform: uppercase;
-	font-weight: 400;
-	font-size: 1.1em;
-	color: #6F6F6F;
-}
-
-.container
-{
-	text-align: center;
-	margin: 0px auto;
-	width: 800px;
-	overflow: hidden;
-	padding: 5em 0em;
-	color: rgba(0,0,0,0.5);
-}
-
-.float-clear
-{
-	clear: both;
-	width: 300;
-	text-align: center;
-}
-
-
-/*********************************************************************************/
-/* Form Style                                                                    */
-/*********************************************************************************/
-form label
-{
-	display: block;
-	margin-bottom: 0.5em;
-}
-
-form .submit
-{
-	background: #8DCB89;
-	border-radius: 3px;
-}
-
-form .delete
-{
-	background: #A00000;
-	border-radius: 3px;
-}
-
-.footer {
-	overflow: hidden;
-	padding: 5em 0em;
-	background: url(../images/header.jpg) center;
-	border-top: 1px solid rgba(255,255,255,0.08);
-	text-align: center;
-	color: white;
-}
-
-.user-input {
-	float: left;
-	width: 40%;
-}
-
-.user-output {
-	float: left;
+footer {
+    margin: 50px 0;
 }
