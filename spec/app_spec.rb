@@ -1,14 +1,14 @@
 require_relative 'spec_helper'
 
-describe 'Prognition Stories' do
+describe 'Smartibuy Stories' do
   include PageObject::PageFactory
-
   before do
-    unless @browser
-      #@headless = Headless.new
-      @browser = Watir::Browser.new
-    end
-  end
+     unless @browser
+       @headless= Headless.new
+       @headless.start
+       @browser = Watir::Browser.new
+     end
+   end
 
   describe 'visit homepage' do
     it 'should find the links' do
