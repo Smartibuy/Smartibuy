@@ -20,4 +20,7 @@ group :test do
   gem 'minitest'
   gem 'vcr'
   gem 'webmock'
+  gem 'watir-webdriver'
+  gem 'headless'
+  gem 'page-object'
 end
