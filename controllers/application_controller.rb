@@ -46,6 +46,9 @@ class ApplicationController < Sinatra::Base
   # =============
 
   app_get_root = lambda do
+    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/817620721658179.json"
+    results = HTTParty.get(request_url)
+    @goodlist = results
     slim :home
   end
 
