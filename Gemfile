@@ -16,6 +16,7 @@ gem 'tilt'
 # chart libraries.
 gem "chartkick"
 
+gem 'activesupport'
 group :test do
   gem 'rack'
   gem 'rake'

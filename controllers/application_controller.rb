@@ -4,6 +4,8 @@ require 'httparty'
 require 'hirb'
 require 'slim'
 
+require 'chartkick'
+require 'uri'
 
 class ApplicationController < Sinatra::Base
 
@@ -88,6 +90,31 @@ class ApplicationController < Sinatra::Base
     redirect "/group/#{group_id}"
   end
 
+
+  statistic = lambda do
+    u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/手機/iphone/10/result.json")
+    results = HTTParty.get(u)
+    @chart_data = {}
+    results.each do |result|
+      @chart_data[result["name"]] = result["price"]
+    end
+    @chart_data
+    slim :statistic
+  end
+
+  statistic_good = lambda do
+    cate = params[:cate]
+    good = params[:good]
+    u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/"<<cate<<"/"<<good<<"/10/result.json")
+    results = HTTParty.get(u)
+    @chart_data = {}
+    results.each do |result|
+      @chart_data[result["name"]] = result["price"]
+    end
+    @chart_data
+    slim :statistic
+  end
+
   # Web App Views Routes
   get '/', &app_get_root
   get '/group/:id' , &app_get_group
@@ -95,5 +122,8 @@ class ApplicationController < Sinatra::Base
   get '/group', &create_group
   get '/search', &search
   post '/search', &search_good_by_group
+
+  get '/statistic', &statistic
+  post '/statistic', &statistic_good
 
 end

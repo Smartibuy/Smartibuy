@@ -25,5 +25,11 @@ nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
               li class='current_page_item'
                 a href='/group' Groups
             - else
-              li
-                a href='/group' Groups
+            li
+              a href='/group' Groups
+              - if current_page?('statistic')
+                li class='current_page_item'
+                  a href='/statistic' Statistic
+              - else
+                li
+                  a href='/statistic' Statistic
