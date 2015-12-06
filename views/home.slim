@@ -25,101 +25,28 @@
               span.glyphicon.glyphicon-chevron-left
             a.right.carousel-control data-slide="next" href="#carousel-example-generic"
               span.glyphicon.glyphicon-chevron-right
-      .row
-        .col-sm-4.col-lg-4.col-md-4
-          .thumbnail
-            img alt="" src="http://placehold.it/320x150" /
-            .caption
-              h4.pull-right $24.99
-              h4
-                a href="#"  First Product
-              p
-                | See more snippets like this online store item at
-            .ratings
-              p.pull-right 15 reviews
-              p
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-        .col-sm-4.col-lg-4.col-md-4
-          .thumbnail
-            img alt="" src="http://placehold.it/320x150" /
-            .caption
-              h4.pull-right $64.99
-              h4
-                a href="#"  Second Product
-              p This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            .ratings
-              p.pull-right 12 reviews
-              p
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star-empty
-        .col-sm-4.col-lg-4.col-md-4
-          .thumbnail
-            img alt="" src="http://placehold.it/320x150" /
-            .caption
-              h4.pull-right $74.99
-              h4
-                a href="#"  Third Product
-              p This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            .ratings
-              p.pull-right 31 reviews
-              p
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star-empty
-        .col-sm-4.col-lg-4.col-md-4
-          .thumbnail
-            img alt="" src="http://placehold.it/320x150" /
-            .caption
-              h4.pull-right $84.99
-              h4
-                a href="#"  Fourth Product
-              p This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            .ratings
-              p.pull-right 6 reviews
-              p
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star-empty
-                span.glyphicon.glyphicon-star-empty
-        .col-sm-4.col-lg-4.col-md-4
-          .thumbnail
-            img alt="" src="http://placehold.it/320x150" /
-            .caption
-              h4.pull-right $94.99
-              h4
-                a href="#"  Fifth Product
-              p This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            .ratings
-              p.pull-right 18 reviews
-              p
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star-empty
-        .col-sm-4.col-lg-4.col-md-4
-          .thumbnail
-            img alt="" src="http://placehold.it/320x150" /
-            .caption
-              h4.pull-right $94.99
-              h4
-                a href="#"  Fifth Product
-              p This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            .ratings
-              p.pull-right 18 reviews
-              p
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star
-                span.glyphicon.glyphicon-star-empty
+      .row#waterfall-container
+        -if @goodlist
+          -@goodlist.each do |good|
+            .col-sm-4.col-lg-4.col-md-4
+              .thumbnail
+                -if good["attachments"]
+                  img src=good["attachments"] height="150"/
+
+                -else
+                  img alt="" src="http://placehold.it/320x150" width="320"/
+                .caption
+                  h4.pull-right $24.99
+                  h4
+                    a href="#"  First Product
+                  p
+                    |
+                    = good["商品資訊"]
+                .ratings
+                  p.pull-right 15 reviews
+                  p
+                    span.glyphicon.glyphicon-star
+                    span.glyphicon.glyphicon-star
+                    span.glyphicon.glyphicon-star
+                    span.glyphicon.glyphicon-star
+                    span.glyphicon.glyphicon-star
