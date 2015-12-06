@@ -1,0 +1,10 @@
+.container
+  .page-header
+    h1 Goods Statistics in Mobile01
+    form action='/statistic' method='post' id='group-form'
+      input type='text' name='cate' id='home-form-group_id' placeholder='手機'
+      input type='text' name='good' id='home-form-group_id' placeholder='iphone'
+      input type='submit' id='home-form-submit' class='submit' value='submit'
+    p
+
+    == column_chart @chart_data, library:{chartArea:{width:'100%'}}, id: 'good', height: '300px', width: '100px'
