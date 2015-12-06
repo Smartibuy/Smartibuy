@@ -13,6 +13,9 @@ gem 'sinatra-flash'
 gem 'slim'
 gem 'tilt'
 
+# chart libraries.
+gem "chartkick"
+
 group :test do
   gem 'rack'
   gem 'rake'
