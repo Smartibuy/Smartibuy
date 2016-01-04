@@ -22,6 +22,11 @@ Thin web server (v1.6.4 codename Gob Bluth)
 Maximum connections set to 1024
 Listening on localhost:[port], CTRL+C to stop
 ```
+**Use `rerun` gem to rackup server when everything change**
+```sh
+$ gem install rerun
+$ rerun 'rackup config.ru -p [port] -E [env]'
+```
 
 If you want to run in test environment.
 ```sh

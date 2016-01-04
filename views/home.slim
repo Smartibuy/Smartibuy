@@ -1,30 +1,6 @@
 .container
   .row
-    .col-md-3
-      p.lead Group List
-      .list-group
-        a.list-group-item href="#"  清交二手貨倉
-        a.list-group-item href="#"  新竹 3C 大拍賣
-        a.list-group-item href="#"  新竹二手交易
-    .col-md-9
-      .row.carousel-holder
-        .col-md-12
-          #carousel-example-generic.carousel.slide data-ride="carousel"
-            ol.carousel-indicators
-              li.active data-slide-to="0" data-target="#carousel-example-generic"
-              li data-slide-to="1" data-target="#carousel-example-generic"
-              li data-slide-to="2" data-target="#carousel-example-generic"
-            .carousel-inner
-              .item.active
-                img.slide-image alt="" src="http://placehold.it/800x300" /
-              .item
-                img.slide-image alt="" src="http://placehold.it/800x300" /
-              .item
-                img.slide-image alt="" src="http://placehold.it/800x300" /
-            a.left.carousel-control data-slide="prev" href="#carousel-example-generic"
-              span.glyphicon.glyphicon-chevron-left
-            a.right.carousel-control data-slide="next" href="#carousel-example-generic"
-              span.glyphicon.glyphicon-chevron-right
+    .col-md-12
       .row#waterfall-container
         -if @goodlist
           -@goodlist.each do |good|
@@ -36,7 +12,7 @@
                 -else
                   img alt="" src="http://placehold.it/320x150" width="320"/
                 .caption
-                  h4.pull-right $ no provided
+                  h4.pull-right $ 尚未提供
                   h4
                     a href=good["ID"]  target="_blank" See More!
                   p

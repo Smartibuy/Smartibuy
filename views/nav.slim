@@ -1,35 +1,50 @@
-nav.navbar.navbar-inverse.navbar-fixed-top role="navigation"
+nav.navbar.navbar-default.navbar-fixed-top role="navigation"
       .container
         .navbar-header
-          button.navbar-toggle data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand href="#"  Smartibuy
+          a.navbar-brand href="/" <i class="ion-bag"></i> Smartibuy!
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav
-            - if current_page?
-              li
-                a href='/' Home
-            - else
-              li
-                a href='/' Home
-            - if current_page?('search')
-              li
-                a href='/search' Search
-            - else
-              li
-                a href='/search' Search
-            - if current_page?('group')
-              li class='current_page_item'
-                a href='/group' Groups
-            - else
-            li
-              a href='/group' Groups
-              - if current_page?('statistic')
-                li class='current_page_item'
-                  a href='/statistic' Statistic
-              - else
-                li
-                  a href='/statistic' Statistic
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="ion-ios-list-outline"></i> 賣場列表<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li role="separator" class="divider"></li>
+                <li><a href="#"><i class="ion-android-list"></i> 北部拍賣</a></li>
+                <li><a href="#">新竹 3C 大拍賣</a></li>
+                <li><a href="#">新竹二手交易</a></li>
+
+                <li role="separator" class="divider"></li>
+                <li><a href="#"><i class="ion-android-list"></i> 東部拍賣</a></li>
+                <li><a href="#">Foobar</a></li>
+                <li><a href="#">Foobar</a></li>
+
+                <li role="separator" class="divider"></li>
+                <li><a href="#"><i class="ion-android-list"></i> 中部拍賣</a></li>
+                <li><a href="#">Foobar</a></li>
+                <li><a href="#">Foobar</a></li>
+
+                <li role="separator" class="divider"></li>
+                <li><a href="#"><i class="ion-android-list"></i> 南部拍賣</a></li>
+                <li><a href="#">Foobar</a></li>
+                <li><a href="#">Foobar</a></li>
+
+                <li role="separator" class="divider"></li>
+                <li><a href="#"><i class="ion-android-list"></i> 各大學拍賣</a></li>
+                <li><a href="#">清交二手貨倉</a></li>
+
+                <li role="separator" class="divider"></li>
+                <li><a href="#"><i class="ion-android-list"></i> 其他拍賣</a></li>
+                <li><a href="#">Foobar</a></li>
+              </ul>
+            </li>
+            <li class="">
+              <a href='#'> <i class="ion-pound"></i> 關於 Smartibuy! </a>
+            </li>
+          <button type="button" class="btn btn-primary navbar-right navbar-btn"><i class="ion-social-facebook"></i> 登入</button>
+          <form class="navbar-form navbar-right" role="search">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="輸入商品...">
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="button">找商品</button>
+              </span>
+            </div><!-- /input-group -->
+          </form>
