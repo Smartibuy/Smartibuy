@@ -1,13 +1,18 @@
 nav.navbar.navbar-default.navbar-fixed-top role="navigation"
       .container
         .navbar-header
+          button.navbar-toggle data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"
+             span.sr-only Toggle navigation
+             span.icon-bar
+             span.icon-bar
+             span.icon-bar
           a.navbar-brand href="/" <i class="ion-bag"></i> Smartibuy!
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav
+            <!-- Groups -->
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="ion-ios-list-outline"></i> 賣場列表<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li role="separator" class="divider"></li>
                 <li><a href="#"><i class="ion-android-list"></i> 北部拍賣</a></li>
                 <li><a href="#">新竹 3C 大拍賣</a></li>
                 <li><a href="#">新竹二手交易</a></li>
@@ -33,18 +38,46 @@ nav.navbar.navbar-default.navbar-fixed-top role="navigation"
 
                 <li role="separator" class="divider"></li>
                 <li><a href="#"><i class="ion-android-list"></i> 其他拍賣</a></li>
-                <li><a href="#">Foobar</a></li>
+                <li><a href="#">小惡魔市集</a></li>
               </ul>
             </li>
+
+            <!-- Category -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="ion-ios-list-outline"></i> 好物分類<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">電腦資訊</a></li>
+                <li><a href="#">手持通訊</a></li>
+                <li><a href="#">攝影器材</a></li>
+                <li><a href="#">數位家電</a></li>
+                <li><a href="#">休閒娛樂</a></li>
+                <li><a href="#">生活用品</a></li>
+                <li><a href="#">汽車</a></li>
+                <li><a href="#">機車</a></li>
+                <li><a href="#">自行車</a></li>
+                <li><a href="#">男性時尚</a></li>
+                <li><a href="#">女性流行</a></li>
+                <li><a href="#">代購與虛擬物品</a></li>
+                <li><a href="#">房屋地產</a></li>
+              </ul>
+            </li>
+
+            <li class="">
+              <a href='#'> <i class="ion-ios-pricetags"></i> 好物標籤 </a>
+            </li>
+
             <li class="">
               <a href='#'> <i class="ion-pound"></i> 關於 Smartibuy! </a>
             </li>
-          <button type="button" class="btn btn-primary navbar-right navbar-btn"><i class="ion-social-facebook"></i> 登入</button>
-          <form class="navbar-form navbar-right" role="search">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="輸入商品...">
-              <span class="input-group-btn">
-                <button class="btn btn-info" type="button">找商品</button>
-              </span>
-            </div><!-- /input-group -->
-          </form>
+            <div class="btn-group" role="group" aria-label="login-area">
+              <button type="button" class="btn btn-danger navbar-btn"><i class="ion-stats-bars"></i> 好物趨勢</button>
+              <button type="button" class="btn btn-primary navbar-btn"><i class="ion-social-facebook"></i> 登入</button>
+            </div>
+            <form class="navbar-form navbar-left" role="search">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="找好物 :)">
+                <span class="input-group-btn">
+                  <button class="btn btn-info" type="button"><i class="ion-search"></i></button>
+                </span>
+              </div><!-- /input-group -->
+            </form>

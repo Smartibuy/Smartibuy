@@ -1,3 +1,5 @@
-$(document).ready(function() {
+$(function($) {
+  var Backbone = require('backbone');
   $('#waterfall-container').waterfall();
-});
+
+}(jQuery));
