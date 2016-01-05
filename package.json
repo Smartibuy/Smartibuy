@@ -1,0 +1,25 @@
+{
+  "name": "smartibuy",
+  "version": "1.0.0",
+  "description": "website of Smartibuy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd public/javascript && duo index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Smartibuy/Smartibuy.git"
+  },
+  "keywords": [
+    "purchase",
+    "goods",
+    "commercial"
+  ],
+  "author": "Calvin Jeng <locky4567@gmail.com> (https://github.com/lockys)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Smartibuy/Smartibuy/issues"
+  },
+  "homepage": "https://github.com/Smartibuy/Smartibuy#readme"
+}
