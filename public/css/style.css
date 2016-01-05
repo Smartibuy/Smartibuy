@@ -30,6 +30,10 @@ body {
     white-space: nowrap;
 }
 
+.thumbnail:hover {
+  border: 1px solid gray;
+}
+
 .thumbnail img {
     width: 100%;
 }
@@ -47,6 +51,17 @@ body {
 .thumbnail .caption-full {
     padding: 9px;
     color: #333;
+}
+
+/* Modal Config. */
+
+.modal-body {
+  max-height: 600px;
+  overflow-x: auto;
+}
+
+.panel-heading {
+  overflow: auto;
 }
 
 footer {
