@@ -5,7 +5,7 @@
         -if @goodlist
           -@goodlist.each do |good|
             .col-sm-4.col-lg-4.col-md-4
-              .thumbnail
+              .thumbnail data-toggle="modal" data-link=good["ID"] data-target="#product-modal" data-good-info=good["商品資訊"] style="cursor: pointer;"
                 -if good["attachments"]
                   img src=good["attachments"] height="150"/
 
@@ -14,9 +14,43 @@
                 .caption
                   h4.pull-right $ 尚未提供
                   h4
-                    a href=good["ID"]  target="_blank" See More!
+                    span 看更多!
                   p
                     |
                     = good["商品資訊"]
                 .ratings
                   p 15 則留言
+
+<div class="modal fade" id="product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">商品資訊</h4>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-info">
+          <div class="panel-heading"><a href="#" class="btn btn-info pull-right" target="_blank">商品原網址</a></div>
+          <div class="panel-body">
+            <!-- Page Content -->
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading">留言</div>
+          <!-- List group -->
+          <ul class="list-group">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
