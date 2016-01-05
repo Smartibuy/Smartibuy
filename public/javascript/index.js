@@ -23,5 +23,4 @@ $(document).ready(function() {
   });
 
   var loginView = new LoginView();
-
 });
