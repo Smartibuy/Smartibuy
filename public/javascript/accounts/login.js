@@ -1,15 +1,8 @@
 module.exports = exports = {
   FB: {},
-  initFacebookSDK: function() {
+  callback: {},
+  initFacebookSDK: function(callback) {
     var _this = this;
-
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {return;}
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
 
     window.fbAsyncInit = function() {
       _this.FB = FB;
@@ -19,6 +12,7 @@ module.exports = exports = {
         version: 'v2.5',
       });
 
+      _this.callback = callback;
       _this.getFacebookLoginState();
     };
   },
@@ -34,25 +28,24 @@ module.exports = exports = {
   },
 
   checkStatus: function(r) {
-    console.log(r);
     var _this = this;
     if (r.status === 'connected') {
-      _this.FB.api('/me', {fields: 'id, picture, email, first_name, middle_name, name'}, _this.getUserInfor);
+      _this.FB.api('/me', {fields: 'id, picture, email, first_name, middle_name, name'}, _this.getUserInfor.bind(_this));
     } else if (r.status === 'not_authorized') {
       _this.loginUser();
+      console.log('Not authorized');
     } else {
       _this.loginUser();
+      console.log('Not Login');
     }
   },
 
   getUserInfor: function(userData) {
-    console.log(userData);
+    this.callback(userData);
   },
 
   logoutUser: function() {
     var _this = this;
-    _this.FB.logout(function(res) {
-      console.log(res);
-    });
+    _this.FB.logout();
   },
 };
