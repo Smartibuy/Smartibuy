@@ -82,21 +82,6 @@ class ApplicationController < Sinatra::Base
     redirect "/group/#{result.group_id}"
   end
 
-  create_group = lambda do
-    slim :creategroup
-  end
-
-  search = lambda do
-    slim :search
-  end
-
-  search_good_by_group = lambda do
-    group_id = params[:group_id]
-    puts 'group id: ' << group_id
-    redirect "/group/#{group_id}"
-  end
-
-
   statistic = lambda do
     u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/手機/iphone/10/result.json")
     results = HTTParty.get(u)
@@ -124,10 +109,6 @@ class ApplicationController < Sinatra::Base
   # Web App Views Routes
   get '/', &app_get_root
   get '/prodct-fetcher' , &fetch_prodocts
-  post '/group' ,&app_post_group
-  get '/group', &create_group
-  get '/search', &search
-  post '/search', &search_good_by_group
 
   get '/statistic', &statistic
   post '/statistic', &statistic_good

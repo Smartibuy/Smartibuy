@@ -26,8 +26,8 @@ $(document).ready(function() {
 
   new Elevator({
     element: document.querySelector('.up-arrow'),
-    mainAudio: '../music/windows.mp3',
-    endAudio: '../music/mac.mp3',
+    mainAudio: '../music/elevator.mp3',
+    endAudio: '../music/ding.mp3',
     duration: 4000,
   });
 
