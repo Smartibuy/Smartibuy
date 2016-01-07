@@ -1,7 +1,7 @@
 .container
   .row
     .col-md-12
-      .row#waterfall-container data-page=@cursor["page"] data-timestamp=@cursor["timestamp"]
+      .row#waterfall-container
         -if @goodlist
           -@goodlist.each do |good|
             .col-sm-4.col-lg-4.col-md-4
@@ -21,6 +21,8 @@
                     | <br/>已有
                     = good["comment_count"]
                     | 則留言
+          -if @goodlist
+            p style="display: none;" data-page=@cursor["page"] data-timestamp=@cursor["timestamp"]
 
 <div class="modal fade" id="product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">
