@@ -5,10 +5,9 @@
         -if @goodlist
           -@goodlist.each do |good|
             .col-sm-4.col-lg-4.col-md-4
-              .thumbnail data-toggle="modal" data-link=good["ID"] data-target="#product-modal" data-good-info=good["商品資訊"] style="cursor: pointer;"
-                -if good["attachments"]
-                  img src=good["attachments"] height="150"/
-
+              .thumbnail data-toggle="modal" data-link=good["origin_url"] data-target="#product-modal" data-good-info=good["message"] style="cursor: pointer;"
+                -if good["attachments"] && !good["attachments"][0].nil?
+                  img src=good["attachments"][0]["src"] height="150"/
                 -else
                   img alt="" src="http://placehold.it/320x150" width="320"/
                 .caption
@@ -16,10 +15,14 @@
                   h4
                     span 看更多!
                   p
-                    |
-                    = good["商品資訊"]
+                    = good["message"]
                 .ratings
-                  p 15 則留言
+                  p
+                    | <br/>已有
+                    = good["comment_count"]
+                    | 則留言
+
+p.cursor data-page=@cursor["page"] data-timestamp=@cursor["timestamp"]
 
 <div class="modal fade" id="product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">

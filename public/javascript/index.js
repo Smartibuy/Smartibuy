@@ -1,5 +1,14 @@
 $(document).ready(function() {
-  var FacebookLogin = require('./login');
+  var FacebookLogin = require('./accounts/login');
+  var facebookLoginBtn = $('.fb-login-btn');
+
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
 
   $('#waterfall-container').waterfall();
   $('#product-modal').on('show.bs.modal', function(event) {
@@ -15,10 +24,9 @@ $(document).ready(function() {
   var LoginView = Backbone.View.extend({
     el: $('body'),
     events: {
-      'click .fb-login-btn': 'login',
+      'click .fb-login-btn': 'logInOut',
     },
-    login: function() {
-      FacebookLogin.initFacebookSDK();
+    logInOut: function() {
     },
   });
 
