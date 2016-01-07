@@ -22,11 +22,11 @@ class ApplicationController < Sinatra::Base
     set :api_ver, 'api/v1'
   end
 
-  configure :development, :test do
+  configure :test do
     set :api_server, 'http://localhost:9292'
   end
 
-  configure :production do
+  configure :development, :production do
     set :api_server, 'http://smartibuyweb.herokuapp.com'
   end
 
@@ -50,9 +50,9 @@ class ApplicationController < Sinatra::Base
   app_get_root = lambda do
     request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/817620721658179/goods"
     results = HTTParty.get(request_url)
+
     @goodlist = results["data"]
     @cursor = results["next"]
-    puts(results["next"])
     slim :home
   end
 
