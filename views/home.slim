@@ -21,8 +21,8 @@
                     | <br/>已有
                     = good["comment_count"]
                     | 則留言
-          -if @goodlist
-            p style="display: none;" data-page=@cursor["page"] data-timestamp=@cursor["timestamp"]
+
+p.cursor data-page=@cursor["page"] data-timestamp=@cursor["timestamp"]
 
 <div class="modal fade" id="product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">

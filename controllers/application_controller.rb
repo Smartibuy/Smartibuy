@@ -22,11 +22,11 @@ class ApplicationController < Sinatra::Base
     set :api_ver, 'api/v1'
   end
 
-  configure :development, :test do
+  configure :test do
     set :api_server, 'http://localhost:9292'
   end
 
-  configure :production do
+  configure :development, :production do
     set :api_server, 'http://smartibuyapidynamo.herokuapp.com'
   end
 
