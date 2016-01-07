@@ -14,7 +14,6 @@ describe 'Smartibuy Stories' do
     it 'should find the links' do
       visit MainPage do |page|
         page.title.must_equal 'Smartibuy!'
-        page.about_link_element.exists?.must_equal true
         page.group_link_element.exists?.must_equal true
       end
     end
