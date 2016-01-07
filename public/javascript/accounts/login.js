@@ -32,20 +32,17 @@ module.exports = exports = {
     if (r.status === 'connected') {
       _this.FB.api('/me', {fields: 'id, picture, email, first_name, middle_name, name'}, _this.getUserInfor.bind(_this));
     } else if (r.status === 'not_authorized') {
-      _this.loginUser();
-      console.log('Not authorized');
+      _this.callback(new Error('Not Authorized'));
     } else {
-      _this.loginUser();
-      console.log('Not Login');
+      _this.callback(new Error('Not Login'));
     }
   },
 
   getUserInfor: function(userData) {
-    this.callback(userData);
+    this.callback(null, userData);
   },
 
   logoutUser: function() {
-    var _this = this;
-    _this.FB.logout();
+    this.FB.logout();
   },
 };
