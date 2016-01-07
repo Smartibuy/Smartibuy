@@ -106,11 +106,27 @@ class ApplicationController < Sinatra::Base
     slim :statistic
   end
 
+  get_hashtag = lambda do
+    JSON_URL = 'https://raw.githubusercontent.com/Smartibuy/shopee/master/lib/data/mobile_category.json'
+    results = HTTParty.get(JSON_URL)
+    json_tag = JSON.parse(results.body)
+
+    @tag_arr = []
+
+    json_tag.each do |k, v|
+      @tag_arr.push(k)
+    end
+
+    slim :hashtag
+  end
+
   # Web App Views Routes
   get '/', &app_get_root
   get '/prodct-fetcher' , &fetch_prodocts
 
   get '/statistic', &statistic
   post '/statistic', &statistic_good
+
+  get '/hashtag', &get_hashtag
 
 end

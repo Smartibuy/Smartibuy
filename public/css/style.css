@@ -18,8 +18,17 @@ div.list-group-item.active small {
 .stars {
     margin:20px auto 1px;
 }
-/* Modal Config. */
 
+img {
+  padding: 5px;
+  border: 1px solid #eee;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background: #ffffff;
+}
+
+/* Modal Config. */
 .modal-body {
   max-height: 600px;
   overflow-x: auto;
