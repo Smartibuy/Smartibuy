@@ -62,24 +62,23 @@ class ApplicationController < Sinatra::Base
   fetch_prodocts = lambda do
     content_type :json
     puts(params)
-    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/817620721658179/goods?timestamp=#{params[:timestamp]}&page=#{params[:page]}"
+
+    id = params[:groupID].nil? ? '817620721658179' : params[:groupID]
+
+    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/" << id << "/goods?timestamp=#{params[:timestamp]}&page=#{params[:page]}"
     results = HTTParty.get(request_url)
     puts(results["next"])
     results.to_json
   end
 
-  app_post_group =lambda do
-    request_url = "#{settings.api_server}/#{settings.api_ver}/create_group"
+  get_group_products = lambda do
+    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/" << params[:id] << "/goods"
+    results = HTTParty.get(request_url)
 
-    form = CreateGroupForm.new(params)
-    result = CreateGroupFromAPI.new(request_url, form).call
-    if (result.code != 200)
-      flash[:notice] = 'Could not found service'
-      redirect '/group'
-      return nil
-    end
+    @goodlist = results["data"]
+    @cursor = results["next"]
 
-    redirect "/group/#{result.group_id}"
+    slim :home
   end
 
   statistic = lambda do
@@ -96,7 +95,7 @@ class ApplicationController < Sinatra::Base
   statistic_good = lambda do
     cate = params[:cate]
     good = params[:good]
-    u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/"<<cate<<"/"<<good<<"/10/result.json")
+    u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/" << cate << "/" << good << "/10/result.json")
     results = HTTParty.get(u)
     @chart_data = {}
     results.each do |result|
@@ -123,6 +122,7 @@ class ApplicationController < Sinatra::Base
   # Web App Views Routes
   get '/', &app_get_root
   get '/prodct-fetcher' , &fetch_prodocts
+  get '/product/:id', &get_group_products
 
   get '/statistic', &statistic
   post '/statistic', &statistic_good
