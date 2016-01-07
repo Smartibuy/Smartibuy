@@ -20,10 +20,6 @@ $(document).ready(function() {
     var goodInfo = button.data('good-info').replace(/\n/g, '<br/>');
     var goodLink = button.data('link');
     var modal = $(this);
-
-    // Upadte the description of a product.
-    modal.find('.panel-body').html(goodInfo);
-    modal.find('.panel-heading a').attr('href', goodLink);
   });
 
   // New ElevatorJS Instance
