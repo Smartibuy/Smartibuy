@@ -8,51 +8,16 @@ body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
-.slide-image {
-    width: 100%;
+div.list-group-item {
+    height:auto;
+    min-height:220px;
 }
-
-.carousel-holder {
-    margin-bottom: 30px;
+div.list-group-item.active small {
+    color:#fff;
 }
-
-.carousel-control,
-.item {
-    border-radius: 4px;
+.stars {
+    margin:20px auto 1px;
 }
-
-.caption {
-    height: 130px;
-    overflow: hidden;
-}
-
-.caption h4 {
-    white-space: nowrap;
-}
-
-.thumbnail:hover {
-  border: 1px solid gray;
-}
-
-.thumbnail img {
-    width: 100%;
-}
-
-.ratings {
-    padding-right: 10px;
-    padding-left: 10px;
-    color: #d17581;
-}
-
-.thumbnail {
-    padding: 0;
-}
-
-.thumbnail .caption-full {
-    padding: 9px;
-    color: #333;
-}
-
 /* Modal Config. */
 
 .modal-body {
