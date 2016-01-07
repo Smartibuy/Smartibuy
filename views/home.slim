@@ -12,21 +12,29 @@
           .media-body
             .panel.panel-info
               .panel-heading
-                h4.media-heading 產品名稱
+                h4.media-heading 
+                = good["title"].nil? ? '無產品名稱' : good["title"]
               .panel-body
                 p.text-right
                   | 來自-
-                  = good["from"]["name"]
+                  = good["from"]["name"].nil? ? '無發佈者' : good["from"]["name"]
                 p
-                  == good["message"].gsub(/\n/, '<br/>')
+                  == good["message"].nil? ? '無敘述' : good["message"].gsub(/\n/, '<br/>')
                 ul.list-inline.list-unstyled
                   li
                     span
                       i.fa.fa-comment
                       | 現在有
                       = good["comment_count"]
-                      | 則留言
-
+                      | 則留言，
+                    br
+                  li
+                    span
+                      i.fa.fa-money
+                      | 價格 
+                      = good["price"].nil? ? '尚無價格' :  good["price"]
+                      | 元
+                      
 p.cursor data-page=@cursor["page"] data-timestamp=@cursor["timestamp"]
 
 <div class="modal fade" id="product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
