@@ -1,26 +1,31 @@
-.container
-  .row
-    .col-md-12
-      .row#waterfall-container
-        -if @goodlist
-          -@goodlist.each do |good|
-            .col-sm-4.col-lg-4.col-md-4
-              .thumbnail data-toggle="modal" data-link=good["origin_url"] data-target="#product-modal" data-good-info=good["message"] style="cursor: pointer;"
-                -if good["attachments"] && !good["attachments"][0].nil?
-                  img src=good["attachments"][0]["src"] height="150"/
-                -else
-                  img alt="" src="http://placehold.it/320x150" width="320"/
-                .caption
-                  h4.pull-right $ 尚未提供
-                  h4
-                    span 看更多!
-                  p
-                    = good["message"]
-                .ratings
-                  p
-                    | <br/>已有
-                    = good["comment_count"]
-                    | 則留言
+.container#main-container
+  -if @goodlist
+    -@goodlist.each do |good|
+      .well data-toggle="modal" data-link=good["origin_url"] data-target="#product-modal" data-good-info=good["message"] style="cursor: pointer;"
+        .media
+          a.pull-left href="#"
+            -if good["attachments"] && !good["attachments"][0].nil?
+              img.media-object src=good["attachments"][0]["src"] width="320"/
+            -else
+              img.media-object alt="" src="http://placehold.it/320x150" width="320"/
+
+          .media-body
+            .panel.panel-info
+              .panel-heading
+                h4.media-heading 產品名稱
+              .panel-body
+                p.text-right
+                  | 來自 -
+                  = good["from"]["name"]
+                p
+                  == good["message"].gsub(/\n/, '<br/>')
+                ul.list-inline.list-unstyled
+                  li
+                    span
+                      i.fa.fa-comment
+                      | 現在有
+                      = good["comment_count"]
+                      | 則留言
 
 p.cursor data-page=@cursor["page"] data-timestamp=@cursor["timestamp"]
 

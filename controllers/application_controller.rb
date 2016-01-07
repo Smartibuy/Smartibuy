@@ -47,21 +47,25 @@ class ApplicationController < Sinatra::Base
   # Web UI Routes
   # =============
 
+  # Root Route
   app_get_root = lambda do
     request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/817620721658179/goods"
     results = HTTParty.get(request_url)
 
     @goodlist = results["data"]
     @cursor = results["next"]
+
     slim :home
   end
 
-  app_get_group = lambda do
-    # for 清交二手貨倉, id is 817620721658179.
-    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/" << params[:id] << ".json"
+  # Route for fetching products by page and timestamp.
+  fetch_prodocts = lambda do
+    content_type :json
+    puts(params)
+    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/817620721658179/goods?timestamp=#{params[:timestamp]}&page=#{params[:page]}"
     results = HTTParty.get(request_url)
-    @goodlist = results
-    slim :goods_info
+    puts(results["next"])
+    results.to_json
   end
 
   app_post_group =lambda do
@@ -119,7 +123,7 @@ class ApplicationController < Sinatra::Base
 
   # Web App Views Routes
   get '/', &app_get_root
-  get '/group/:id' , &app_get_group
+  get '/prodct-fetcher' , &fetch_prodocts
   post '/group' ,&app_post_group
   get '/group', &create_group
   get '/search', &search

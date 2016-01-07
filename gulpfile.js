@@ -23,7 +23,6 @@ gulp.task('build', function() {
     insertGlobals: true,
   }))
   .pipe(rename('bundle.min.js'))
-  .pipe(uglify())
   .pipe(gulp.dest('./public/javascript'));
 });
 
