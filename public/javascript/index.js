@@ -17,9 +17,26 @@ $(document).ready(function() {
   // Register Product Modal
   $('#product-modal').on('show.bs.modal', function(event) {
     var button = $(event.relatedTarget);
-    var goodInfo = button.data('good-info').replace(/\n/g, '<br/>');
-    var goodLink = button.data('link');
     var modal = $(this);
+    var id = button.data('good-id');
+    console.log(id);
+    $.ajax({
+      method: 'GET',
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      dataType: 'json',
+      url: '/product_comment',
+      data: {
+        id: id,
+        action: 'after',
+      },
+      success: function(response) {
+        console.log(response);
+      },
+
+      error: function(response) {
+        console.log(response);
+      },
+    });
   });
 
   // New ElevatorJS Instance
@@ -38,6 +55,7 @@ $(document).ready(function() {
 
     touchBottom: function() {
       var $cursorEle = $('.cursor');
+      var $spinKiter = $('.sk-rotating-plane');
       var _this = this;
       var cursor = {
         page: $cursorEle.attr('data-page'),
@@ -45,6 +63,8 @@ $(document).ready(function() {
       };
 
       if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+        $spinKiter.removeClass('content-hidden');
+
         $.ajax({
           method: 'GET',
           contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -58,14 +78,16 @@ $(document).ready(function() {
           success: function(response) {
             var products = response.data;
             for (let p of products) {
-              $('#main-container').append(_this.dealWithProductHtml(p.message ? p.message : '無敘述', p.price ? p.price : '尚無價格', p.comment_count, p.attachments[0]? p.attachments[0].src : 'http://placehold.it/320x150', p.origin_url, p.title ? p.title : '無產品名稱', p.from.name ? p.from.name : '無發佈者'));
+              $('#main-container').append(_this.dealWithProductHtml(p.message ? p.message : '無敘述', p.price ? `${p.price} 元` : '尚無價格', p.comment_count, p.attachments[0]? p.attachments[0].src : 'http://placehold.it/320x150', p.origin_url, p.title ? p.title : '無產品名稱', p.from.name ? p.from.name : '無發佈者'));
             }
 
             $cursorEle.attr({'data-timestamp': response.next.timestamp, 'data-page': response.next.page});
+            $spinKiter.addClass('content-hidden');
           },
 
           error: function(response) {
-            alert('讀取錯誤');
+            console.log('讀取錯誤，請重新整理');
+            $spinKiter.addClass('content-hidden');
           },
         });
       }
@@ -80,19 +102,23 @@ $(document).ready(function() {
                     <div class="media-body">
                       <div class="panel panel-info">
                         <div class="panel-heading">
-                          <h4 class="media-heading">${title}</h4>
+                          <h4 class="media-heading" style="display: inline-block;">
+                            ${title}
+                            <br/>
+                            <span>
+                              <i class="fa fa-money"></i> ${price}
+                            </span>
+                          </h4>
+                          <a href=${url} class="btn btn-info pull-right" target="_blank">商品原網址</a>
                         </div>
                         <div class="panel-body">
-                          <p class="text-right">來自-${user}</p>
+                          <p class="text-right">來自 ${user} 朋友的好物!</p>
                           <p>
                             ${message}
                           </p>
                           <ul class="list-inline list-unstyled">
                             <li>
-                              <span><i class="fa fa-comment"></i>現在有${comments}則留言， </span>
-                            </li>
-                            <li>
-                              <span><i class="fa fa-money"></i>價格${price} 元</span>
+                              <span><i class="fa fa-comment"></i> ${comments} 則留言， </span>
                             </li>
                           </ul>
                         </div>

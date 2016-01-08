@@ -49,7 +49,7 @@ class ApplicationController < Sinatra::Base
 
   # Root Route
   app_get_root = lambda do
-    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/817620721658179/goods"
+    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/107793636088378/goods"
     results = HTTParty.get(request_url)
 
     @goodlist = results["data"]
@@ -61,13 +61,10 @@ class ApplicationController < Sinatra::Base
   # Route for fetching products by page and timestamp.
   fetch_prodocts = lambda do
     content_type :json
-    puts(params)
-
     id = params[:groupID].nil? ? '817620721658179' : params[:groupID]
 
     request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/" << id << "/goods?timestamp=#{params[:timestamp]}&page=#{params[:page]}"
     results = HTTParty.get(request_url)
-    puts(results["next"])
     results.to_json
   end
 
@@ -79,6 +76,13 @@ class ApplicationController < Sinatra::Base
     @cursor = results["next"]
 
     slim :home
+  end
+
+  get_product_comments = lambda do
+    content_type :json
+    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/goods/" << params[:id] << "/comments?action=" << params[:action]
+    results = HTTParty.get(request_url)
+    results["data"].to_json
   end
 
   statistic = lambda do
@@ -123,6 +127,7 @@ class ApplicationController < Sinatra::Base
   get '/', &app_get_root
   get '/prodct-fetcher' , &fetch_prodocts
   get '/product/:id', &get_group_products
+  get '/product_comment', &get_product_comments
 
   get '/statistic', &statistic
   post '/statistic', &statistic_good

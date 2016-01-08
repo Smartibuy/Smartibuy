@@ -1,7 +1,7 @@
 .container#main-container
   -if @goodlist
     -@goodlist.each do |good|
-      .well data-toggle="modal" data-link=good["origin_url"] data-target="#product-modal" data-good-info=good["message"] style="cursor: pointer;"
+      .well data-toggle="modal" data-target="#product-modal" data-good-id=good["id"] style="cursor: pointer;"
         .media
           a.pull-left href="#"
             -if good["attachments"] && !good["attachments"][0].nil?
@@ -12,33 +12,29 @@
           .media-body
             .panel.panel-info
               .panel-heading
-                h4.media-heading 
-                = good["title"].nil? ? '無產品名稱' : good["title"]
+                h4.media-heading style="display: inline-block"
+                  = good["title"].nil? ? '無產品名稱' : good["title"]
+                  br
+                  span
+                    i.fa.fa-money
+                    = good["price"].nil? ? ' 尚無價格' :  ' ' << good["price"].to_s << ' 元'
                 a href=good["origin_url"] class="btn btn-info pull-right" target="_blank"
                   | 商品原網址
               
               .panel-body
                 p.text-right
-                  | 來自-
-                  = good["from"]["name"].nil? ? '無發佈者' : good["from"]["name"]
+                  = good["from"]["name"].nil? ? '無發佈者' : '來自 ' << good["from"]["name"] << ' 朋友的好物!'
                 p
                   == good["message"].nil? ? '無敘述' : good["message"].gsub(/\n/, '<br/>')
                 ul.list-inline.list-unstyled
                   li
                     span
                       i.fa.fa-comment
-                      | 現在有
-                      = good["comment_count"]
-                      | 則留言，
-                    br
-                  li
-                    span
-                      i.fa.fa-money
-                      | 價格 
-                      = good["price"].nil? ? '尚無價格' :  good["price"]
-                      | 元
+                      = ' ' << good["comment_count"].to_s << ' 則留言'
                       
 p.cursor data-page=@cursor["page"] data-timestamp=@cursor["timestamp"]
+
+<div class="sk-rotating-plane content-hidden"></div>
 
 <div class="modal fade" id="product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">
@@ -54,10 +50,6 @@ p.cursor data-page=@cursor["page"] data-timestamp=@cursor["timestamp"]
           <!-- List group -->
           <ul class="list-group">
             <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
           </ul>
         </div>
       </div>
