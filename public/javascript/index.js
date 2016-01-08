@@ -5,15 +5,6 @@ $(document).ready(function() {
   var LoginView = require('./backbone-view/login-view');
   var facebookLoginBtn = $('.fb-login-btn');
 
-  // Loading Facebook SDK.
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-
   // Register Product Modal
   $('#product-modal').on('show.bs.modal', function(event) {
     var button = $(event.relatedTarget);
@@ -30,7 +21,13 @@ $(document).ready(function() {
         action: 'after',
       },
       success: function(response) {
-        console.log(response);
+        $('.list-group').html('');
+        response = JSON.parse(response);
+
+        for (var comments of response) {
+          $('.list-group').append(`<li class="list-group-item"><img src="${comments.from.picture.url}"/> ${comments.from.name} 說: ${comments.message}</li>`);
+        }
+
       },
 
       error: function(response) {
@@ -77,7 +74,7 @@ $(document).ready(function() {
           },
           success: function(response) {
             var products = response.data;
-            for (let p of products) {
+            for (var p of products) {
               $('#main-container').append(_this.dealWithProductHtml(p.message ? p.message : '無敘述', p.price ? `${p.price} 元` : '尚無價格', p.comment_count, p.attachments[0]? p.attachments[0].src : 'http://placehold.it/320x150', p.origin_url, p.title ? p.title : '無產品名稱', p.from.name ? p.from.name : '無發佈者'));
             }
 
@@ -132,5 +129,7 @@ $(document).ready(function() {
 
   var loginView = new LoginView();
   var productView = new ProductView();
+
+  loginView.checkUserState();
 
 });
