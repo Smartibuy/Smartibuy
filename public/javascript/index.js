@@ -17,9 +17,26 @@ $(document).ready(function() {
   // Register Product Modal
   $('#product-modal').on('show.bs.modal', function(event) {
     var button = $(event.relatedTarget);
-    var goodInfo = button.data('good-info').replace(/\n/g, '<br/>');
-    var goodLink = button.data('link');
     var modal = $(this);
+    var id = button.data('good-id');
+    console.log(id);
+    $.ajax({
+      method: 'GET',
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      dataType: 'json',
+      url: '/product_comment',
+      data: {
+        id: id,
+        action: 'after',
+      },
+      success: function(response) {
+        console.log(response);
+      },
+
+      error: function(response) {
+        console.log(response);
+      },
+    });
   });
 
   // New ElevatorJS Instance
