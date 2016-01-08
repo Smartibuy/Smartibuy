@@ -61,13 +61,23 @@ nav.navbar.navbar-default.navbar-fixed-top role="navigation"
             <li class="">
               <a href='/hashtag'> <i class="ion-ios-pricetags"></i> 好物標籤 </a>
             </li>
+            
+            <!-- Category -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="ion-ios-list-outline"></i> 登入/登出<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#"><a href="/user" class="user-info-btn"><i class="ion-person"></i> 您的帳號</a></a></li>
+                <li><a class="fb-login-btn" data-status="logout"><i class="ion-social-facebook"></i> 登入</a></li>
+              </ul>
+            </li>
 
-            <div class="btn-group" role="group" aria-label="login-area">
+
+
+            <li class="">
               <button type="button" class="btn btn-danger navbar-btn"><i class="ion-stats-bars"></i> 好物趨勢</button>
-              <button type="button" class="btn btn-info navbar-btn"><i class="ion-person"></i> 您的帳號</button>
-              <button type="button" class="btn btn-primary navbar-btn fb-login-btn" data-status="logout"><i class="ion-social-facebook"></i> 登入</button>
-            </div>
-            <form class="navbar-form navbar-left" role="search">
+            </li>
+
+            <form class="navbar-form navbar-left col-md-1" role="search">
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="找好物 :)">
                 <span class="input-group-btn">

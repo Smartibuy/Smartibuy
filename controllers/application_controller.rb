@@ -123,6 +123,10 @@ class ApplicationController < Sinatra::Base
     slim :hashtag
   end
 
+  show_user_info = lambda do
+    slim :user
+  end
+
   # Web App Views Routes
   get '/', &app_get_root
   get '/prodct-fetcher' , &fetch_prodocts
@@ -133,5 +137,7 @@ class ApplicationController < Sinatra::Base
   post '/statistic', &statistic_good
 
   get '/hashtag', &get_hashtag
+
+  get '/user', &show_user_info
 
 end
