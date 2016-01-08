@@ -75,7 +75,7 @@ $(document).ready(function() {
           success: function(response) {
             var products = response.data;
             for (var p of products) {
-              $('#main-container').append(_this.dealWithProductHtml(p.message ? p.message : '無敘述', p.price ? `${p.price} 元` : '尚無價格', p.comment_count, p.attachments[0]? p.attachments[0].src : 'http://placehold.it/320x150', p.origin_url, p.title ? p.title : '無產品名稱', p.from.name ? p.from.name : '無發佈者'));
+              $('#main-container').append(_this.dealWithProductHtml(p.message ? p.message.replace(/\n/g,'<br/>') : '無敘述', p.price ? `${p.price} 元` : '尚無價格', p.comment_count, p.attachments[0]? p.attachments[0].src : 'http://placehold.it/320x150', p.origin_url, p.title ? p.title : '無產品名稱', p.from.name ? p.from.name : '無發佈者', p.id));
             }
 
             $cursorEle.attr({'data-timestamp': response.next.timestamp, 'data-page': response.next.page});
@@ -90,8 +90,8 @@ $(document).ready(function() {
       }
     },
 
-    dealWithProductHtml: function(message, price, comments, imageUrl, url, title, user) {
-      return `<div class="well" data-toggle="modal" data-link=${url} data-target="#product-modal" data-good-info=${message} style="cursor: pointer;">
+    dealWithProductHtml: function(message, price, comments, imageUrl, url, title, user, id) {
+      return `<div class="well" data-toggle="modal" data-good-id="${id}" data-target="#product-modal" style="cursor: pointer;">
                   <div class="media">
                     <a class="pull-left" href="#">
                       <img class="media-object" src="${imageUrl}" width="320">
