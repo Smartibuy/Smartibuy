@@ -9,6 +9,9 @@ require 'uri'
 
 class ApplicationController < Sinatra::Base
 
+  CATEGORY_LIST = ["電腦資訊", "手持通訊", "攝影器材", "數位家電", "休閒旅遊", "生活用品", "汽車", "機車", "自行車", "男性時尚", "女性流行", "代購與虛擬物品", "房屋地產"]
+  KEYWORD = '筆電'
+
   enable :sessions
   register Sinatra::Flash
   use Rack::MethodOverride
@@ -22,12 +25,12 @@ class ApplicationController < Sinatra::Base
     set :api_ver, 'api/v1'
   end
 
-  configure :development, :test do
+  configure :test do
     set :api_server, 'http://localhost:9292'
   end
 
-  configure :production do
-    set :api_server, 'http://smartibuyweb.herokuapp.com'
+  configure :development, :production do
+    set :api_server, 'http://smartibuyapidynamo.herokuapp.com'
   end
 
   configure :production, :development do
@@ -47,49 +50,43 @@ class ApplicationController < Sinatra::Base
   # Web UI Routes
   # =============
 
+  # Root Route
   app_get_root = lambda do
-    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/817620721658179.json"
+    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/107793636088378/goods"
     results = HTTParty.get(request_url)
-    @goodlist = results
+
+    @goodlist = results["data"]
+    @cursor = results["next"]
+
     slim :home
   end
 
-  app_get_group = lambda do
-    # for 清交二手貨倉, id is 817620721658179.
-    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/" << params[:id] << ".json"
+  # Route for fetching products by page and timestamp.
+  fetch_prodocts = lambda do
+    content_type :json
+    id = params[:groupID].nil? ? '817620721658179' : params[:groupID]
+
+    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/" << id << "/goods?timestamp=#{params[:timestamp]}&page=#{params[:page]}"
     results = HTTParty.get(request_url)
-    @goodlist = results
-    slim :goods_info
+    results.to_json
   end
 
-  app_post_group =lambda do
-    request_url = "#{settings.api_server}/#{settings.api_ver}/create_group"
+  get_group_products = lambda do
+    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/" << params[:id] << "/goods"
+    results = HTTParty.get(request_url)
 
-    form = CreateGroupForm.new(params)
-    result = CreateGroupFromAPI.new(request_url, form).call
-    if (result.code != 200)
-      flash[:notice] = 'Could not found service'
-      redirect '/group'
-      return nil
-    end
+    @goodlist = results["data"]
+    @cursor = results["next"]
 
-    redirect "/group/#{result.group_id}"
+    slim :home
   end
 
-  create_group = lambda do
-    slim :creategroup
+  get_product_comments = lambda do
+    content_type :json
+    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/goods/" << params[:id] << "/comments?action=" << params[:action]
+    results = HTTParty.get(request_url)
+    results["data"].to_json
   end
-
-  search = lambda do
-    slim :search
-  end
-
-  search_good_by_group = lambda do
-    group_id = params[:group_id]
-    puts 'group id: ' << group_id
-    redirect "/group/#{group_id}"
-  end
-
 
   statistic = lambda do
     u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/手機/iphone/10/result.json")
@@ -105,7 +102,7 @@ class ApplicationController < Sinatra::Base
   statistic_good = lambda do
     cate = params[:cate]
     good = params[:good]
-    u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/"<<cate<<"/"<<good<<"/10/result.json")
+    u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/" << cate << "/" << good << "/10/result.json")
     results = HTTParty.get(u)
     @chart_data = {}
     results.each do |result|
@@ -115,15 +112,61 @@ class ApplicationController < Sinatra::Base
     slim :statistic
   end
 
+  get_hashtag = lambda do
+    JSON_URL = 'https://raw.githubusercontent.com/Smartibuy/shopee/master/lib/data/mobile_category.json'
+    results = HTTParty.get(JSON_URL)
+    json_tag = JSON.parse(results.body)
+
+    @tag_arr = []
+
+    json_tag.each do |k, v|
+      @tag_arr.push(k)
+    end
+
+    slim :hashtag
+  end
+
+  show_user_info = lambda do
+    slim :user
+  end
+
+  search = lambda do
+    i = params[:index].to_i - 1
+    cate = CATEGORY_LIST[i]
+
+    if params[:keyword] != nil
+      KEYWORD = params[:keyword]
+    end
+    @keyword = KEYWORD
+
+    url = "http://smartibuyapidynamo.herokuapp.com/api/v1/search_mobile01/"<<cate<<"/"<<@keyword<<"/10/result.json"
+    puts url
+    u = URI.escape(url)
+    @goodlist = HTTParty.get(u)
+    @cate = cate
+
+    u1 = URI.escape('http://smartibuyapidynamo.herokuapp.com/api/v1/add_keyword_to_search_queue/'<<@keyword)
+    HTTParty.post(u1, :headers => {'Content-Type' => 'application/json'})
+    u2 = URI.escape('http://smartibuyapidynamo.herokuapp.com/api/v1/add_keyword_to_cate_queue/'<<cate)
+    HTTParty.post(u2, :headers => {'Content-Type' => 'application/json'})
+
+
+    slim :search
+  end
+
   # Web App Views Routes
   get '/', &app_get_root
-  get '/group/:id' , &app_get_group
-  post '/group' ,&app_post_group
-  get '/group', &create_group
-  get '/search', &search
-  post '/search', &search_good_by_group
+  get '/prodct-fetcher' , &fetch_prodocts
+  get '/product/:id', &get_group_products
+  get '/product_comment', &get_product_comments
 
   get '/statistic', &statistic
   post '/statistic', &statistic_good
+
+  get '/hashtag', &get_hashtag
+
+  get '/user', &show_user_info
+
+  get '/search/:index', &search
 
 end

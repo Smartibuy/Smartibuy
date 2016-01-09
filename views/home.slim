@@ -1,28 +1,61 @@
-.container
-  .row
-    .col-md-12
-      .row#waterfall-container
-        -if @goodlist
-          -@goodlist.each do |good|
-            .col-sm-4.col-lg-4.col-md-4
-              .thumbnail
-                -if good["attachments"]
-                  img src=good["attachments"] height="150"/
+.container#main-container
+  -if @goodlist
+    -@goodlist.each do |good|
+      .well data-toggle="modal" data-target="#product-modal" data-good-id=good["id"] style="cursor: pointer;"
+        .media
+          a.pull-left href="#"
+            -if good["attachments"] && !good["attachments"][0].nil?
+              img.media-object src=good["attachments"][0]["src"] width="320"/
+            -else
+              img.media-object alt="" src="http://placehold.it/320x150" width="320"/
 
-                -else
-                  img alt="" src="http://placehold.it/320x150" width="320"/
-                .caption
-                  h4.pull-right $ 尚未提供
-                  h4
-                    a href=good["ID"]  target="_blank" See More!
-                  p
-                    |
-                    = good["商品資訊"]
-                .ratings
-                  p.pull-right 15 comments
-                  p
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star
+          .media-body
+            .panel.panel-info
+              .panel-heading
+                h4.media-heading style="display: inline-block"
+                  = good["title"].nil? ? '無產品名稱' : good["title"]
+                  br
+                  span
+                    i.fa.fa-money
+                    = good["price"].nil? ? ' 尚無價格' :  ' ' << good["price"].to_s << ' 元'
+                a href=good["origin_url"] class="btn btn-info pull-right" target="_blank"
+                  | 商品原網址
+              
+              .panel-body
+                p.text-right
+                  = good["from"]["name"].nil? ? '無發佈者' : '來自 ' << good["from"]["name"] << ' 朋友的好物!'
+                p
+                  == good["message"].nil? ? '無敘述' : good["message"].gsub(/\n/, '<br/>')
+                ul.list-inline.list-unstyled
+                  li
+                    span
+                      i.fa.fa-comment
+                      = ' ' << good["comment_count"].to_s << ' 則留言'
+                      
+p.cursor data-page=@cursor["page"] data-timestamp=@cursor["timestamp"]
+
+<div class="sk-rotating-plane content-hidden"></div>
+
+<div class="modal fade" id="product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">查看留言</h4>
+      </div>
+      <div class="modal-body">
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading">留言</div>
+          <!-- List group -->
+          <ul class="list-group">
+
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
+      </div>
+    </div>
+  </div>
+</div>
