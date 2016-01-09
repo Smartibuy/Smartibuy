@@ -144,6 +144,13 @@ class ApplicationController < Sinatra::Base
     u = URI.escape(url)
     @goodlist = HTTParty.get(u)
     @cate = cate
+
+    u1 = URI.escape('http://smartibuyapidynamo.herokuapp.com/api/v1/add_keyword_to_search_queue/'<<@keyword)
+    HTTParty.post(u1, :headers => {'Content-Type' => 'application/json'})
+    u2 = URI.escape('http://smartibuyapidynamo.herokuapp.com/api/v1/add_keyword_to_cate_queue/'<<cate)
+    HTTParty.post(u2, :headers => {'Content-Type' => 'application/json'})
+
+
     slim :search
   end
 
