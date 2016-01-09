@@ -9,6 +9,9 @@ require 'uri'
 
 class ApplicationController < Sinatra::Base
 
+  CATEGORY_LIST = ["電腦資訊", "手持通訊", "攝影器材", "數位家電", "休閒旅遊", "生活用品", "汽車", "機車", "自行車", "男性時尚", "女性流行", "代購與虛擬物品", "房屋地產"]
+  KEYWORD = '筆電'
+
   enable :sessions
   register Sinatra::Flash
   use Rack::MethodOverride
@@ -127,6 +130,23 @@ class ApplicationController < Sinatra::Base
     slim :user
   end
 
+  search = lambda do
+    i = params[:index].to_i - 1
+    cate = CATEGORY_LIST[i]
+
+    if params[:keyword] != nil
+      KEYWORD = params[:keyword]
+    end
+    @keyword = KEYWORD
+
+    url = "http://smartibuyapidynamo.herokuapp.com/api/v1/search_mobile01/"<<cate<<"/"<<@keyword<<"/10/result.json"
+    puts url
+    u = URI.escape(url)
+    @goodlist = HTTParty.get(u)
+    @cate = cate
+    slim :search
+  end
+
   # Web App Views Routes
   get '/', &app_get_root
   get '/prodct-fetcher' , &fetch_prodocts
@@ -139,5 +159,7 @@ class ApplicationController < Sinatra::Base
   get '/hashtag', &get_hashtag
 
   get '/user', &show_user_info
+
+  get '/search/:index', &search
 
 end
