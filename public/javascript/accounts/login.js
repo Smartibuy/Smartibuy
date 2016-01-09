@@ -18,7 +18,7 @@ module.exports = exports = {
       _this.FB = FB;
       _this.FB.init({
         // sandbox = 1536852743274599, production = 1517291225230751
-        appId: '1536852743274599',
+        appId: '1517291225230751',
         xfbml: true,
         version: 'v2.5',
       });
