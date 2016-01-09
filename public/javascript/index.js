@@ -115,7 +115,7 @@ $(document).ready(function() {
                           </p>
                           <ul class="list-inline list-unstyled">
                             <li>
-                              <span><i class="fa fa-comment"></i> ${comments} 則留言， </span>
+                              <span><i class="fa fa-comment"></i> ${comments} 則留言</span>
                             </li>
                           </ul>
                         </div>

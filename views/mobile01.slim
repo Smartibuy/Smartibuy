@@ -1,0 +1,30 @@
+.container#main-container
+  -if @goodlist
+    -@goodlist.each do |good|
+      .well
+        .media
+          a.pull-left href="#"
+              img.media-object alt="" src="http://placehold.it/320x150" width="320"/
+
+          .media-body
+            .panel.panel-info
+              .panel-heading
+                h4.media-heading style="display: inline-block"
+                  | 產品價格
+                  br
+                  span
+                    i.fa.fa-money
+                    = good["price"].nil? ? ' 尚無價格' :  ' ' << good["price"].to_s
+                a href=good["link"] class="btn btn-info pull-right" target="_blank"
+                  | 商品原網址
+              
+              .panel-body
+                p
+                  == good["name"].nil? ? '無敘述' : good["name"].gsub(/\n/, '<br/>')
+                ul.list-inline.list-unstyled
+                  li
+                    span
+                      i.fa.fa-comment
+                      = ' ' << good["num"].to_s << ' 則留言'
+                      
+<div class="sk-rotating-plane content-hidden"></div>

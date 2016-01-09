@@ -88,6 +88,19 @@ class ApplicationController < Sinatra::Base
     results["data"].to_json
   end
 
+  get_mobile01_products = lambda do
+    request_url = "#{settings.api_server}/#{settings.api_ver}/mobile01/" << URI.escape(params[:cate])
+    results = HTTParty.get(request_url)
+
+    results.each do |result|
+      result["link"] = 'http://www.mobile01.com/' << result["link"]
+      result
+    end
+
+    @goodlist = results
+    slim :mobile01
+  end
+
   statistic = lambda do
     u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/手機/iphone/10/result.json")
     results = HTTParty.get(u)
@@ -126,6 +139,16 @@ class ApplicationController < Sinatra::Base
     slim :hashtag
   end
 
+  subscribe_hastag = lambda do
+    request_url = '#{settings.api_server}/#{settings.api_ver}/update_user_date/' << params[:id]
+    HTTParty.post(request_url,
+                    :body => {
+                      :email => params[:email],
+                      :hashtag => params[:hashtag],
+                    },
+                    :headers => { 'Content-Type' => 'application/json' })
+  end
+
   show_user_info = lambda do
     slim :user
   end
@@ -139,7 +162,7 @@ class ApplicationController < Sinatra::Base
     end
     @keyword = KEYWORD
 
-    url = "http://smartibuyapidynamo.herokuapp.com/api/v1/search_mobile01/"<<cate<<"/"<<@keyword<<"/10/result.json"
+    url = "http://smartibuyapidynamo.herokuapp.com/api/v1/search_mobile01/" << cate << "/" << @keyword << "/10/result.json"
     puts url
     u = URI.escape(url)
     @goodlist = HTTParty.get(u)
@@ -160,10 +183,13 @@ class ApplicationController < Sinatra::Base
   get '/product/:id', &get_group_products
   get '/product_comment', &get_product_comments
 
+  get '/mobile01/:cate', &get_mobile01_products
+
   get '/statistic', &statistic
   post '/statistic', &statistic_good
 
   get '/hashtag', &get_hashtag
+  post '/subscriber', &subscribe_hastag
 
   get '/user', &show_user_info
 
