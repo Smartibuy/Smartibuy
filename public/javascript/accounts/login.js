@@ -17,7 +17,8 @@ module.exports = exports = {
     window.fbAsyncInit = function() {
       _this.FB = FB;
       _this.FB.init({
-        appId: '1517291225230751',
+        // sandbox = 1536852743274599, production = 1517291225230751
+        appId: '1536852743274599',
         xfbml: true,
         version: 'v2.5',
       });
