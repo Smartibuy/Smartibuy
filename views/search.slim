@@ -1,0 +1,53 @@
+.container
+  .page-header
+    
+    -if @keyword
+      <div align='center'>
+        <h3 id='product-keyword'>#{@keyword} </h3>
+      </div>
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">#{@cate}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="/search/1">電腦資訊</a></li>
+          <li><a href="/search/2">手持通訊</a></li>
+          <li><a href="/search/3">攝影器材</a></li>
+          <li><a href="/search/4">數位家電</a></li>
+          <li><a href="/search/5">休閒娛樂</a></li>
+          <li><a href="/search/6">生活用品</a></li>
+          <li><a href="/search/7">汽車</a></li>
+          <li><a href="/search/8">機車</a></li>
+          <li><a href="/search/9">自行車</a></li>
+          <li><a href="/search/10">男性時尚</a></li>
+          <li><a href="/search/11">女性流行</a></li>
+          <li><a href="/search/12">代購與虛擬物品</a></li>
+          <li><a href="/search/13">房屋地產</a></li>
+        </ul>
+      </div>
+      
+      br
+    
+    -if @goodlist
+    table.table
+      tbody
+        tr
+          th 商品資訊
+          th 價錢
+          th 詢價次數
+          th 更新時間
+          th Link
+        -@goodlist.each do |good|
+          tr
+            td width='1000'
+              = good['name']
+            td width='150'
+              = good['price']
+            td width='100'
+              = good['num']
+            td width='100'
+              = good['update_time']
+            td width='50'
+              a href= "#{'http://www.mobile01.com/'+ good['link']}"
+                i.fa.fa-external-link
+    
