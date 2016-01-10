@@ -237,7 +237,7 @@ class ApplicationController < Sinatra::Base
     end
 
     @results = results
-    @group = GROUP_NAME[i]
+    @group = group
 
     slim :search_fb
   end
