@@ -17,7 +17,8 @@ module.exports = exports = {
     window.fbAsyncInit = function() {
       _this.FB = FB;
       _this.FB.init({
-        appId: '1517291225230751',
+        // sandbox = 1536852743274599, production = 1517291225230751
+        appId: window.location.host === 'www.smartibuy.top' ? '1517291225230751' : '1536852743274599',
         xfbml: true,
         version: 'v2.5',
       });
@@ -51,6 +52,26 @@ module.exports = exports = {
   },
 
   getUserInfor: function(userData) {
+
+    // Add user to dynamoid.
+    $.ajax({
+      method: 'POST',
+      url: `/user_adder/${userData.id}`,
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      data: {
+        email: userData.email,
+      },
+      success: function(response) {
+        console.log(response);
+      },
+
+      error: function(response) {
+        console.log(response);
+      },
+    });
+
+    // Store UserKey
+    localStorage.setItem('uid', userData.id);
     this.callback(null, userData);
   },
 

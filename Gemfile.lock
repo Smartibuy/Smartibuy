@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    RubyInline (3.12.4)
+      ZenTest (~> 4.3)
+    ZenTest (4.11.0)
     activemodel (4.2.4)
       activesupport (= 4.2.4)
       builder (~> 3.1)
@@ -37,6 +40,8 @@ GEM
     faker (1.6.1)
       i18n (~> 0.5)
     ffi (1.9.10)
+    fuzzy-string-match (0.9.7)
+      RubyInline (>= 3.8.6)
     hashdiff (0.2.3)
     headless (2.2.0)
     hirb (0.7.3)
@@ -106,6 +111,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   chartkick
+  fuzzy-string-match
   headless
   hirb
   httparty

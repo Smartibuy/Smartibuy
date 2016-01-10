@@ -1,12 +1,6 @@
 .container
   .jumbotron
     .alert.alert-info role="alert"
-      | 訂閱好物標籤，隨時掌握您感興趣的商品種類！點標籤即可訂閱
-    
-    -if @tag_arr
-      -for tag in @tag_arr
-          button.btn.btn-primary type="button" style="margin: 4px;" data-tag=tag
-            i.fa.fa-times.sub-tag
-            | 
-            =tag
+      | 訂閱好物標籤，隨時掌握您感興趣的商品種類！點標籤即可訂閱，可在登入/登出=>你的帳號取消訂閱
+    .tag-area
           
