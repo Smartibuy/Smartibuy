@@ -203,6 +203,7 @@ class ApplicationController < Sinatra::Base
       KEYWORD = params[:keyword]
     end
     @keyword = KEYWORD
+    @group = GROUP_NAME[i]
 
     request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/" << group << "/goods"
     results = HTTParty.get(request_url)
@@ -237,7 +238,6 @@ class ApplicationController < Sinatra::Base
     end
 
     @results = results
-    @group = group
 
     slim :search_fb
   end
