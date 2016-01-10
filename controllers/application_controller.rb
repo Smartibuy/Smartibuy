@@ -107,30 +107,6 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  statistic = lambda do
-    u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/手機/iphone/10/result.json")
-    results = HTTParty.get(u)
-    @chart_data = {}
-    results.each do |result|
-      @chart_data[result["name"]] = result["price"]
-    end
-    @chart_data
-    slim :statistic
-  end
-
-  statistic_good = lambda do
-    cate = params[:cate]
-    good = params[:good]
-    u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/" << cate << "/" << good << "/10/result.json")
-    results = HTTParty.get(u)
-    @chart_data = {}
-    results.each do |result|
-      @chart_data[result["name"]] = result["price"]
-    end
-    @chart_data
-    slim :statistic
-  end
-
   get_hashtag = lambda do
     JSON_URL = 'https://raw.githubusercontent.com/Smartibuy/shopee/master/lib/data/mobile_category.json'
     results = HTTParty.get(JSON_URL)
@@ -166,6 +142,16 @@ class ApplicationController < Sinatra::Base
     puts results
   end
 
+  get_user_info = lambda do
+    content_type :json, charset: 'utf-8'
+
+    request_url = "#{settings.api_server}/#{settings.api_ver}/users/" << params[:id]
+    results = HTTParty.get(request_url)
+    puts results
+    puts results["hashtag"].to_json
+    results["hashtag"].to_json
+  end
+
   show_user_info = lambda do
     slim :user
   end
@@ -194,6 +180,30 @@ class ApplicationController < Sinatra::Base
     slim :search
   end
 
+  # statistic = lambda do
+  #   u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/手機/iphone/10/result.json")
+  #   results = HTTParty.get(u)
+  #   @chart_data = {}
+  #   results.each do |result|
+  #     @chart_data[result["name"]] = result["price"]
+  #   end
+  #   @chart_data
+  #   slim :statistic
+  # end
+  #
+  # statistic_good = lambda do
+  #   cate = params[:cate]
+  #   good = params[:good]
+  #   u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/" << cate << "/" << good << "/10/result.json")
+  #   results = HTTParty.get(u)
+  #   @chart_data = {}
+  #   results.each do |result|
+  #     @chart_data[result["name"]] = result["price"]
+  #   end
+  #   @chart_data
+  #   slim :statistic
+  # end
+
   # Web App Views Routes
   get '/', &app_get_root
   get '/prodct-fetcher' , &fetch_prodocts
@@ -208,6 +218,7 @@ class ApplicationController < Sinatra::Base
   get '/hashtag', &get_hashtag
   post '/subscriber/:id', &subscribe_hastag
   post '/user_adder/:id', &add_user
+  get '/get_user_info/:id', &get_user_info
 
   get '/user', &show_user_info
 
