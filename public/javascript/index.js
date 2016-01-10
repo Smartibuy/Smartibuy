@@ -6,18 +6,18 @@ $(document).ready(function() {
   var ProductView = require('./backbone-view/product-view');
   var facebookLoginBtn = $('.fb-login-btn');
 
-  $.ajax({
-    method: 'GET',
-    dataType: 'json',
-    url: '/test_route',
-    success: function(response) {
-      console.log(response);
-    },
-
-    error: function(response) {
-      console.log(response);
-    },
-  });
+  // $.ajax({
+  //   method: 'GET',
+  //   dataType: 'json',
+  //   url: '/test_route',
+  //   success: function(response) {
+  //     console.log(response);
+  //   },
+  //
+  //   error: function(response) {
+  //     console.log(response);
+  //   },
+  // });
 
   // Register Product Modal
   $('#product-modal').on('show.bs.modal', function(event) {
@@ -36,6 +36,7 @@ $(document).ready(function() {
       },
       success: function(response) {
         $('.list-group').html('');
+        console.log(response);
         response = JSON.parse(response);
 
         if (response.length === 0) {

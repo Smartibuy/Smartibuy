@@ -68,7 +68,6 @@ class ApplicationController < Sinatra::Base
 
     @goodlist = results["data"]
     @cursor = results["next"]
-    puts results
     slim :home
   end
 
@@ -95,12 +94,13 @@ class ApplicationController < Sinatra::Base
   get_product_comments = lambda do
     content_type :json
     request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/goods/" << params[:id] << "/comments?action=" << params[:action]
-    @results = HTTParty.get(request_url)
-    @results["data"].to_json
+    results = HTTParty.get(request_url)
+    # puts results["data"], results["data"].class
+    results["data"].to_json
   end
 
   get_mobile01_products = lambda do
-    puts params[:page].to_s
+    # puts params[:page].to_s
     request_url = "#{settings.api_server}/#{settings.api_ver}/mobile01/" << URI.escape(params[:cate]) << "?page=" << params[:page].to_s
     results = HTTParty.get(request_url)
 
@@ -143,7 +143,7 @@ class ApplicationController < Sinatra::Base
 
   subscribe_hastag = lambda do
     request_url = "#{settings.api_server}/#{settings.api_ver}/users/" << params[:id] << "/tags/"
-    puts params[:hashtag], params[:id]
+    # puts params[:hashtag], params[:id]
     HTTParty.post(request_url,
                     {
                       :body => {"tag" => params[:hashtag]}.to_json,
@@ -154,18 +154,18 @@ class ApplicationController < Sinatra::Base
   unsubscribe_tag = lambda do
     request_url = "#{settings.api_server}/#{settings.api_ver}/users/" << params[:id] << "/tags/" << URI.escape(params[:tag])
     results = HTTParty.delete(request_url)
-    puts results
+    # puts results
   end
 
   add_user = lambda do
     request_url = "#{settings.api_server}/#{settings.api_ver}/users/" << params[:id]
-    puts request_url
+    # puts request_url
     results = HTTParty.post(request_url,
                     {
                       :body => {"email" => params[:email]}.to_json,
                       :headers => { 'Content-Type' => 'application/json' }
                     })
-    puts results
+    # puts results
   end
 
   get_user_info = lambda do
@@ -173,8 +173,8 @@ class ApplicationController < Sinatra::Base
 
     request_url = "#{settings.api_server}/#{settings.api_ver}/users/" << params[:id]
     results = HTTParty.get(request_url)
-    puts results
-    puts results["hashtag"].to_json
+    # puts results
+    # puts results["hashtag"].to_json
     results["hashtag"].to_json
   end
 
@@ -222,7 +222,7 @@ class ApplicationController < Sinatra::Base
     @keyword = KEYWORD
 
     url = "http://smartibuyapidynamo.herokuapp.com/api/v1/search_mobile01/" << cate << "/" << @keyword << "/10/result.json"
-    puts url
+    # puts url
     u = URI.escape(url)
     @goodlist = HTTParty.get(u)
     @cate = cate
@@ -286,8 +286,12 @@ class ApplicationController < Sinatra::Base
   end
 
   test_route = lambda do
+    # Note:
+    # the ajax success callabck will get a response which is `javascript object` if the result is hash or array.
+    # the response will be a String if result is a string.
     content_type :json
-    {'name' => 'Calvin'}.to_json
+    result = [{'name' => 'Calvin'}, {'name' => 'Calvins'}]
+    result.to_json
   end
 
   # statistic = lambda do
