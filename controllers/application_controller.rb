@@ -131,6 +131,12 @@ class ApplicationController < Sinatra::Base
                     })
   end
 
+  unsubscribe_tag = lambda do
+    request_url = "#{settings.api_server}/#{settings.api_ver}/users/" << params[:id] << "/tags/" << URI.escape(params[:tag])
+    results = HTTParty.delete(request_url)
+    puts results
+  end
+
   add_user = lambda do
     request_url = "#{settings.api_server}/#{settings.api_ver}/users/" << params[:id]
     puts request_url
@@ -211,7 +217,7 @@ class ApplicationController < Sinatra::Base
   get '/product_comment', &get_product_comments
 
   get '/mobile01/:cate', &get_mobile01_products
-
+  delete '/unsubscribe/:id/:tag', &unsubscribe_tag
   # get '/statistic', &statistic
   # post '/statistic', &statistic_good
 
