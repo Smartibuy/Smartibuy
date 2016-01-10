@@ -214,14 +214,17 @@ class ApplicationController < Sinatra::Base
 
     jarow = FuzzyStringMatch::JaroWinkler.create( :native )
     rank = {}
-    puts goods.length
     goods.each do |good|
-      value = jarow.getDistance(good['message'] ,@keyword)
-      value2 = jarow.getDistance(good['title'] ,@keyword)
+      value = 0
+      if good['title'] != nil
+        value = jarow.getDistance(good['title'] ,@keyword)
+      end
+      value2 = jarow.getDistance(good['message'] ,@keyword)
+
       if value2 > value
         value = value2
       end
-      rank[good['title']] = value
+      rank[good['message']] = value
     end
 
     rank_after_sort = Hash[rank.sort_by{|k, v| v}.reverse]
@@ -230,7 +233,7 @@ class ApplicationController < Sinatra::Base
     for i in 0..list_num.to_i - 1
       good_name = key[i]
       goods.each do |good|
-        if good['title'] == good_name
+        if good['message'] == good_name
           results << good
           break
         end
