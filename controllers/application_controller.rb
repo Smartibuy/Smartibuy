@@ -147,11 +147,12 @@ class ApplicationController < Sinatra::Base
 
   subscribe_hastag = lambda do
     request_url = "#{settings.api_server}/#{settings.api_ver}/users/" << params[:id] << "/tags/"
+    puts params[:hashtag], params[:id]
     HTTParty.post(request_url,
-                    :body => {
-                      :tag => params[:hashtag],
-                    },
-                    :headers => { 'Content-Type' => 'application/json' })
+                    {
+                      :body => {"tag" => params[:hashtag]}.to_json,
+                      :headers => { 'Content-Type' => 'application/json' }
+                    })
   end
 
   add_user = lambda do
