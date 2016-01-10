@@ -6,6 +6,8 @@ require 'slim'
 
 require 'chartkick'
 require 'uri'
+require 'time'
+require 'json'
 
 class ApplicationController < Sinatra::Base
 
@@ -57,7 +59,7 @@ class ApplicationController < Sinatra::Base
 
     @goodlist = results["data"]
     @cursor = results["next"]
-
+    puts results
     slim :home
   end
 
@@ -84,8 +86,8 @@ class ApplicationController < Sinatra::Base
   get_product_comments = lambda do
     content_type :json
     request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/goods/" << params[:id] << "/comments?action=" << params[:action]
-    results = HTTParty.get(request_url)
-    results["data"].to_json
+    @results = HTTParty.get(request_url)
+    @results["data"].to_json
   end
 
   get_mobile01_products = lambda do
@@ -157,16 +159,25 @@ class ApplicationController < Sinatra::Base
   show_user_info = lambda do
     slim :user
   end
-  
-  hot = lambda do
-    request_url_keyword = "#{settings.api_server}/#{settings.api_ver}/hot/keyword"
-    results = HTTParty.get(request_url_keyword)
 
-    request_url_cate = "#{settings.api_server}/#{settings.api_ver}/hot/cate"
-    results = HTTParty.get(request_url_key)
-
+  hotcloud = lambda do
+    request_url = "#{settings.api_server}/#{settings.api_ver}/hot/keyword"
+    results = HTTParty.get(request_url)
+    @keyword = JSON.parse(results)
+    num = @keyword.size
+    @time_to_key = {}
+    @item = []
+    @time = []
+    for i in 0..num-1
+      @time.push(Time.parse(@keyword[i]["time"]))
+      @time_to_key["#{@keyword[i]["time"]}"] = @keyword[i]["key"]
+      @key_num = @keyword[i]["key"].size
+      @item.push(JSON.parse(@keyword[i]["key"]))
+    end
+    puts @item[0].size
     slim :hotcloud
   end
+
 
   search = lambda do
     i = params[:index].to_i - 1
@@ -190,7 +201,7 @@ class ApplicationController < Sinatra::Base
 
     slim :search
   end
-  
+
 
   # Web App Views Routes
   get '/', &app_get_root
@@ -209,7 +220,7 @@ class ApplicationController < Sinatra::Base
   get '/user', &show_user_info
 
   get '/search/:index', &search
-  
-  get '/hotcloud', &hot
+
+  get '/hotcloud', &hotcloud
 
 end
