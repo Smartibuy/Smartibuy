@@ -4,12 +4,21 @@ require 'httparty'
 require 'hirb'
 require 'slim'
 
+require 'fuzzystringmatch'
 require 'chartkick'
 require 'uri'
 
 class ApplicationController < Sinatra::Base
 
   CATEGORY_LIST = ["電腦資訊", "手持通訊", "攝影器材", "數位家電", "休閒旅遊", "生活用品", "汽車", "機車", "自行車", "男性時尚", "女性流行", "代購與虛擬物品", "房屋地產"]
+  GROUP_LIST = ['1049467665068019', '107793636088378',
+                '1049467665068019', '144498012423141',
+                '1603205203255905', '373766972786317',
+                '817620721658179', '1491972361082561',
+                '191505604299442']
+  GROUP_NAME = ['桃竹苗跳蚤市場', '新竹二手跳蚤市場', '桃園中壢買賣',
+                '大台南二手交流', '高雄二手買賣交流團', '高屏區二手買賣',
+                '清交二手貨倉', '中教大二手買賣市場', '交大二手大賣場']
   KEYWORD = '筆電'
 
   enable :sessions
@@ -186,6 +195,53 @@ class ApplicationController < Sinatra::Base
     slim :search
   end
 
+  search_fb = lambda do
+    i = params[:index].to_i - 1
+    group = GROUP_LIST[i]
+
+    if params[:keyword] != nil
+      KEYWORD = params[:keyword]
+    end
+    @keyword = KEYWORD
+
+    request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/" << group << "/goods"
+    results = HTTParty.get(request_url)
+
+    goods = results["data"]
+
+    list_num = 5
+
+    jarow = FuzzyStringMatch::JaroWinkler.create( :native )
+    rank = {}
+    puts goods.length
+    goods.each do |good|
+      value = jarow.getDistance(good['message'] ,@keyword)
+      value2 = jarow.getDistance(good['title'] ,@keyword)
+      if value2 > value
+        value = value2
+      end
+      rank[good['title']] = value
+    end
+
+    rank_after_sort = Hash[rank.sort_by{|k, v| v}.reverse]
+    key = rank_after_sort.keys()
+    results = []
+    for i in 0..list_num.to_i - 1
+      good_name = key[i]
+      goods.each do |good|
+        if good['title'] == good_name
+          results << good
+          break
+        end
+      end
+    end
+
+    @results = results
+    @group = GROUP_NAME[i]
+
+    slim :search_fb
+  end
+
   # statistic = lambda do
   #   u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/手機/iphone/10/result.json")
   #   results = HTTParty.get(u)
@@ -229,5 +285,6 @@ class ApplicationController < Sinatra::Base
   get '/user', &show_user_info
 
   get '/search/:index', &search
+  get '/search_fb/:index', &search_fb
 
 end
