@@ -130,6 +130,3 @@ DEPENDENCIES
   virtus
   watir-webdriver
   webmock
-
-BUNDLED WITH
-   1.11.2

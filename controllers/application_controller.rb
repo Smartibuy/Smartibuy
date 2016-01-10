@@ -7,6 +7,8 @@ require 'slim'
 require 'fuzzystringmatch'
 require 'chartkick'
 require 'uri'
+require 'time'
+require 'json'
 
 class ApplicationController < Sinatra::Base
 
@@ -66,7 +68,7 @@ class ApplicationController < Sinatra::Base
 
     @goodlist = results["data"]
     @cursor = results["next"]
-
+    puts results
     slim :home
   end
 
@@ -93,8 +95,8 @@ class ApplicationController < Sinatra::Base
   get_product_comments = lambda do
     content_type :json
     request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/goods/" << params[:id] << "/comments?action=" << params[:action]
-    results = HTTParty.get(request_url)
-    results["data"].to_json
+    @results = HTTParty.get(request_url)
+    @results["data"].to_json
   end
 
   get_mobile01_products = lambda do
@@ -180,6 +182,36 @@ class ApplicationController < Sinatra::Base
     slim :user
   end
 
+  hotcloud = lambda do
+    request_url_keyword = "#{settings.api_server}/#{settings.api_ver}/hot/keyword"
+    results_keyword = HTTParty.get(request_url_keyword)
+    @keyword = JSON.parse(results_keyword)
+    num = @keyword.size
+    @time_key = []
+    for i in 0..num-1
+      @time_key.push(@keyword[i]["time"].split(' ')[0])
+    end
+
+    slim :hotcloud
+  end
+
+  hotcloud_data_key = lambda do
+    content_type :json
+    request_url_keyword = "#{settings.api_server}/#{settings.api_ver}/hot/keyword"
+    results_keyword = HTTParty.get(request_url_keyword)
+    results_keyword.to_json
+
+  end
+
+  hotcloud_data_cate = lambda do
+    content_type :json
+    request_url_cate = "#{settings.api_server}/#{settings.api_ver}/hot/cate"
+    results_cate = HTTParty.get(request_url_cate)
+    results_cate.to_json
+
+  end
+
+
   search = lambda do
     i = params[:index].to_i - 1
     cate = CATEGORY_LIST[i]
@@ -199,7 +231,6 @@ class ApplicationController < Sinatra::Base
     HTTParty.post(u1, :headers => {'Content-Type' => 'application/json'})
     u2 = URI.escape('http://smartibuyapidynamo.herokuapp.com/api/v1/add_keyword_to_cate_queue/' << cate)
     HTTParty.post(u2, :headers => {'Content-Type' => 'application/json'})
-
 
     slim :search
   end
@@ -305,5 +336,9 @@ class ApplicationController < Sinatra::Base
   get '/search/:index', &search
   get '/search_fb/:index', &search_fb
   get '/test_route', &test_route
+
+  get '/hotcloud', &hotcloud
+  get '/hotcloudkey', &hotcloud_data_key
+  get '/hotcloudcate', &hotcloud_data_cate
 
 end
