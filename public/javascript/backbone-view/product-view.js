@@ -7,6 +7,7 @@ module.exports = exports = Backbone.View.extend({
 
   events: {
     'click .subscribe-btn': 'subscribeTag',
+    'click .unsubscribe-btn': 'unsubscribeTag',
   },
 
   subscribeTag: function(e) {
@@ -22,6 +23,25 @@ module.exports = exports = Backbone.View.extend({
       success: function(response) {
         alert('訂閱成功!');
         console.log(response);
+      },
+
+      error: function(response) {
+        console.log(response);
+      },
+    });
+  },
+
+  unsubscribeTag: function(e) {
+    console.log('un');
+    var tag = $(e.target).data('tag');
+    $.ajax({
+      method: 'DELETE',
+      url: `/unsubscribe/${localStorage.getItem('uid')}/${tag}`,
+
+      success: function(response) {
+        alert('取消訂閱成功!');
+        console.log(response);
+        location.reload();
       },
 
       error: function(response) {
