@@ -108,6 +108,9 @@ class ApplicationController < Sinatra::Base
     end
 
     if params[:page].nil?
+      u = 'http://smartibuyapidynamo.herokuapp.com/api/v1/add_keyword_to_cate_queue/' << URI.escape(params[:cate])
+      HTTParty.post(u, :headers => {'Content-Type' => 'application/json'})
+      
       @tag = params[:cate]
       @goodlist = results
       slim :mobile01
@@ -192,9 +195,9 @@ class ApplicationController < Sinatra::Base
     @goodlist = HTTParty.get(u)
     @cate = cate
 
-    u1 = URI.escape('http://smartibuyapidynamo.herokuapp.com/api/v1/add_keyword_to_search_queue/'<<@keyword)
+    u1 = URI.escape('http://smartibuyapidynamo.herokuapp.com/api/v1/add_keyword_to_search_queue/' << @keyword)
     HTTParty.post(u1, :headers => {'Content-Type' => 'application/json'})
-    u2 = URI.escape('http://smartibuyapidynamo.herokuapp.com/api/v1/add_keyword_to_cate_queue/'<<cate)
+    u2 = URI.escape('http://smartibuyapidynamo.herokuapp.com/api/v1/add_keyword_to_cate_queue/' << cate)
     HTTParty.post(u2, :headers => {'Content-Type' => 'application/json'})
 
 
