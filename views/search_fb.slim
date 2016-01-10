@@ -33,14 +33,14 @@
         tr
           th 商品名稱
           th 價錢
-          th Link
+          th 產品網址
         -@results.each do |good|
           tr
             td
-              = good['title']
+              = good["title"].nil? ? '無產品名稱' : good["title"]
             td width='150'
-              = good['price']
-            td width='50'
+              = good['price'].nil? ? '請查看敘述' : good['price']
+            td width='100'
               a href= good["origin_url"]
                 i.fa.fa-external-link
           
