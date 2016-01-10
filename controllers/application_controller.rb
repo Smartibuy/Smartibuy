@@ -157,6 +157,16 @@ class ApplicationController < Sinatra::Base
   show_user_info = lambda do
     slim :user
   end
+  
+  hot = lambda do
+    request_url_keyword = "#{settings.api_server}/#{settings.api_ver}/hot/keyword"
+    results = HTTParty.get(request_url_keyword)
+
+    request_url_cate = "#{settings.api_server}/#{settings.api_ver}/hot/cate"
+    results = HTTParty.get(request_url_key)
+
+    slim :hotcloud
+  end
 
   search = lambda do
     i = params[:index].to_i - 1
@@ -178,9 +188,9 @@ class ApplicationController < Sinatra::Base
     u2 = URI.escape('http://smartibuyapidynamo.herokuapp.com/api/v1/add_keyword_to_cate_queue/'<<cate)
     HTTParty.post(u2, :headers => {'Content-Type' => 'application/json'})
 
-
     slim :search
   end
+  
 
   # Web App Views Routes
   get '/', &app_get_root
@@ -199,5 +209,7 @@ class ApplicationController < Sinatra::Base
   get '/user', &show_user_info
 
   get '/search/:index', &search
+  
+  get '/hotcloud', &hot
 
 end
