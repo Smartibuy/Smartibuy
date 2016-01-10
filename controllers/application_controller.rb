@@ -110,7 +110,7 @@ class ApplicationController < Sinatra::Base
     if params[:page].nil?
       u = 'http://smartibuyapidynamo.herokuapp.com/api/v1/add_keyword_to_cate_queue/' << URI.escape(params[:cate])
       HTTParty.post(u, :headers => {'Content-Type' => 'application/json'})
-      
+
       @tag = params[:cate]
       @goodlist = results
       slim :mobile01
@@ -254,6 +254,11 @@ class ApplicationController < Sinatra::Base
     slim :search_fb
   end
 
+  test_route = lambda do
+    content_type :json
+    {'name' => 'Calvin'}.to_json
+  end
+
   # statistic = lambda do
   #   u = URI.escape("http://smartibuyweb.herokuapp.com/api/v1/search_mobile01/手機/iphone/10/result.json")
   #   results = HTTParty.get(u)
@@ -299,5 +304,6 @@ class ApplicationController < Sinatra::Base
 
   get '/search/:index', &search
   get '/search_fb/:index', &search_fb
+  get '/test_route', &test_route
 
 end

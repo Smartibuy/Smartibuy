@@ -6,6 +6,19 @@ $(document).ready(function() {
   var ProductView = require('./backbone-view/product-view');
   var facebookLoginBtn = $('.fb-login-btn');
 
+  $.ajax({
+    method: 'GET',
+    dataType: 'json',
+    url: '/test_route',
+    success: function(response) {
+      console.log(response);
+    },
+
+    error: function(response) {
+      console.log(response);
+    },
+  });
+
   // Register Product Modal
   $('#product-modal').on('show.bs.modal', function(event) {
     var button = $(event.relatedTarget);
