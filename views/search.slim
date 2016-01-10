@@ -2,6 +2,9 @@
   .page-header
     
     -if @keyword
+      <div align='right'>
+        <button type="button" class="btn btn-primary btn-xs" onclick="javascript:location.href='/search_fb/1'">FB</button>
+      </div>
       <div align='center'>
         <h3 id='product-keyword'>#{@keyword} </h3>
       </div>
