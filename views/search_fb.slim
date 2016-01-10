@@ -33,39 +33,14 @@
         tr
           th 商品名稱
           th 價錢
-          th 商品敘述
-          th Link
+          th 產品網址
         -@results.each do |good|
           tr
             td
               = good["title"].nil? ? '無產品名稱' : good["title"]
             td width='150'
               = good['price'].nil? ? '請查看敘述' : good['price']
-            td 
-              <!-- Trigger the modal with a button -->
-              <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">點擊查看</button>
-
-              <!-- Modal -->
-              <div id="myModal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-
-                  <!-- Modal content-->
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">商品敘述</h4>
-                    </div>
-                    <div class="modal-body">
-                       =good['message']
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            td width='50'
+            td width='100'
               a href= good["origin_url"]
                 i.fa.fa-external-link
           
