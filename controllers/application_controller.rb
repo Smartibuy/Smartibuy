@@ -214,7 +214,6 @@ class ApplicationController < Sinatra::Base
 
     jarow = FuzzyStringMatch::JaroWinkler.create( :native )
     rank = {}
-    puts goods
     goods.each do |good|
       value = 0
       if good['title'] != nil
