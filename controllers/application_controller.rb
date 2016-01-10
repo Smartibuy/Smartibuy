@@ -99,6 +99,7 @@ class ApplicationController < Sinatra::Base
     end
 
     if params[:page].nil?
+      @tag = params[:cate]
       @goodlist = results
       slim :mobile01
     else
@@ -145,13 +146,23 @@ class ApplicationController < Sinatra::Base
   end
 
   subscribe_hastag = lambda do
-    request_url = '#{settings.api_server}/#{settings.api_ver}/update_user_date/' << params[:id]
+    request_url = "#{settings.api_server}/#{settings.api_ver}/users/" << params[:id] << "/tags/"
     HTTParty.post(request_url,
                     :body => {
-                      :email => params[:email],
-                      :hashtag => params[:hashtag],
+                      :tag => params[:hashtag],
                     },
                     :headers => { 'Content-Type' => 'application/json' })
+  end
+
+  add_user = lambda do
+    request_url = "#{settings.api_server}/#{settings.api_ver}/users/" << params[:id]
+    puts request_url
+    results = HTTParty.post(request_url,
+                    {
+                      :body => {"email" => params[:email]}.to_json,
+                      :headers => { 'Content-Type' => 'application/json' }
+                    })
+    puts results
   end
 
   show_user_info = lambda do
@@ -190,11 +201,12 @@ class ApplicationController < Sinatra::Base
 
   get '/mobile01/:cate', &get_mobile01_products
 
-  get '/statistic', &statistic
-  post '/statistic', &statistic_good
+  # get '/statistic', &statistic
+  # post '/statistic', &statistic_good
 
   get '/hashtag', &get_hashtag
-  post '/subscriber', &subscribe_hastag
+  post '/subscriber/:id', &subscribe_hastag
+  post '/user_adder/:id', &add_user
 
   get '/user', &show_user_info
 

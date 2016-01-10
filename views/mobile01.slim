@@ -16,7 +16,7 @@
                     i.fa.fa-money
                     = good["price"].nil? ? ' 尚無價格' :  ' ' << good["price"].to_s
                 a href=good["link"] class="btn btn-info pull-right" target="_blank"
-                  | 商品原網址
+                  | 看更詳細!
               
               .panel-body
                 p
@@ -26,5 +26,9 @@
                     span
                       i.fa.fa-comment
                       = ' ' << good["num"].to_s << ' 則留言'
+                button.btn.btn-primary.subscribe-btn type="button" style="margin: 4px;" data-tag=@tag
+                  i.fa.fa-check-square-o
+                  |  
+                  =@tag
                       
 <div class="sk-rotating-plane content-hidden"></div>

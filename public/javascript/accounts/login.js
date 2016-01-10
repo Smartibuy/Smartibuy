@@ -18,7 +18,7 @@ module.exports = exports = {
       _this.FB = FB;
       _this.FB.init({
         // sandbox = 1536852743274599, production = 1517291225230751
-        appId: '1536852743274599',
+        appId: '1517291225230751',
         xfbml: true,
         version: 'v2.5',
       });
@@ -52,6 +52,24 @@ module.exports = exports = {
   },
 
   getUserInfor: function(userData) {
+
+    // Add user to dynamoid.
+    $.ajax({
+      method: 'POST',
+      url: `/user_adder/${userData.id}`,
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      data: {
+        email: userData.email,
+      },
+      success: function(response) {
+        console.log(response);
+      },
+
+      error: function(response) {
+        console.log(response);
+      },
+    });
+
     this.callback(null, userData);
   },
 
