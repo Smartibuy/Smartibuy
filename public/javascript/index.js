@@ -46,7 +46,7 @@ $(document).ready(function() {
     element: document.querySelector('.up-arrow'),
     mainAudio: '../music/elevator.mp3',
     endAudio: '../music/ding.mp3',
-    duration: 4000,
+    duration: 10000,
   });
 
   var loginView = new LoginView();
