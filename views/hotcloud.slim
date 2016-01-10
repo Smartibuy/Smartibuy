@@ -19,9 +19,9 @@
       javascript:
         var processed_key = {};
         var processed_cate = {};
-        
+
         $('.date-option').click(function() {
-            console.log($(this).val());
+            console.log ($(this).val());
             console.log(processed_key[$(this).val()]);
             genWordCloud(JSON.parse(processed_key[$(this).val()]), '.hot_keyword');
             genWordCloud(JSON.parse(processed_cate[$(this).val()]), '.hot_cate');
@@ -86,7 +86,7 @@
           
           var color = d3.scale.linear()
                   .domain([0,1,2,3,4,5,6,10,15,20,100])
-                  .range(color);
+                  .range(["#5f9ea0d", "#8db600", "#ff9966", "#00ffff", "#deb887", "#6495ed", "#00ced1", "#ffd700", "#ff69b4", "#add8e6", "#ffa07a", "#87cefa"]);
         
           d3.layout.cloud().size([800, 300])
                   .words(frequency_list)
