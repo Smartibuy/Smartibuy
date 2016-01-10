@@ -99,6 +99,7 @@ class ApplicationController < Sinatra::Base
     end
 
     if params[:page].nil?
+      @tag = params[:cate]
       @goodlist = results
       slim :mobile01
     else

@@ -81,7 +81,7 @@ $(document).ready(function() {
             success: function(response) {
               var products = response;
               for (var p of products) {
-                $('#main-container').append(_this.dealWithMobile01Html(p.price, p.link, p.num, p.name));
+                $('#main-container').append(_this.dealWithMobile01Html(p.price, p.link, p.num, p.name, decodeURI(window.location.href.split('/')[4])));
               }
 
               this.mobilePage = this.mobilePage + 1;
@@ -126,7 +126,7 @@ $(document).ready(function() {
       }
     },
 
-    dealWithMobile01Html: function(price, url, comments, message) {
+    dealWithMobile01Html: function(price, url, comments, message, tag) {
       return `<div class="well">
                   <div class="media">
                     <a class="pull-left" href="#">
@@ -142,7 +142,7 @@ $(document).ready(function() {
                               <i class="fa fa-money"></i> ${price}
                             </span>
                           </h4>
-                          <a href=${url} class="btn btn-info pull-right" target="_blank">商品原網址</a>
+                          <a href=${url} class="btn btn-info pull-right" target="_blank">看更詳細!</a>
                         </div>
                         <div class="panel-body">
                           <p>
@@ -153,6 +153,9 @@ $(document).ready(function() {
                               <span><i class="fa fa-comment"></i> ${comments} 則留言</span>
                             </li>
                           </ul>
+                          <button class="btn btn-primary subscribe-btn" type="button" data-tag=${tag} style="margin: 4px;">
+                            <i class="fa fa-check-square-o"></i> ${tag}
+                          </button>
                         </div>
                       </div>
                    </div>
@@ -177,7 +180,7 @@ $(document).ready(function() {
                               <i class="fa fa-money"></i> ${price}
                             </span>
                           </h4>
-                          <a href=${url} class="btn btn-info pull-right" target="_blank">商品原網址</a>
+                          <a href=${url} class="btn btn-info pull-right" target="_blank">看更詳細!</a>
                         </div>
                         <div class="panel-body">
                           <p class="text-right"><i class="fa fa-heart-o"></i> 來自 ${user} 朋友的好物!</p>

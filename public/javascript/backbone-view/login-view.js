@@ -54,10 +54,10 @@ module.exports = exports = Backbone.View.extend({
     var loginBtn = _this.loginBtn;
 
     if (state === 'login') {
-      loginBtn.text('登出').attr('data-status', 'login');
+      loginBtn.html('<i class="fa fa-sign-out"></i> 登出').attr('data-status', 'login');
       userInfoBtn.removeClass('content-hidden');
     } else {
-      loginBtn.text('登入').attr('data-status', 'logout');
+      loginBtn.html('<i class="fa fa-sign-in"></i> 登入').attr('data-status', 'logout');
       userInfoBtn.addClass('content-hidden');
     }
   },
