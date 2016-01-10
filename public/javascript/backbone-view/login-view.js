@@ -83,7 +83,7 @@ module.exports = exports = Backbone.View.extend({
 
     for (var tag of tagSet) {
       tagContainer.append(
-      `<button class="btn btn-primary unsubscribe-btn" type="button" data-tag=${tag} style="margin: 4px;">
+      `<button class="btn btn-primary unsubscribe-btn" data-loading-text="取消訂閱中..." type="button" data-tag=${tag} style="margin: 4px;" autocomplete="off">
         <i class="fa fa-check-square-o"></i> ${tag}
       </button>`);
     }

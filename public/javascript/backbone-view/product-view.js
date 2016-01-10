@@ -1,18 +1,56 @@
 module.exports = exports = Backbone.View.extend({
   el: $('body'),
   initialize: function() {
+    var path = window.location.pathname.split('/')[1];
     this.mobilePage = 2;
     this.mainCate = ['電腦資訊', '手持通訊', '攝影器材', '數位家電', '休閒娛樂', '生活用品', '汽車', '機車', '自行車', '男性時尚', '女性流行', '代購與虛擬物品', '房屋地產'];
 
     $(window).scroll(this.touchBottom.bind(this));
-    if (window.location.pathname.split('/')[1] === 'mobile01') {
+
+    if (path === 'mobile01') {
       this.fillSubCate();
+    } else if (path === 'hashtag') {
+      this.fillTheHashTag();
     }
   },
 
   events: {
     'click .subscribe-btn': 'subscribeTag',
     'click .unsubscribe-btn': 'unsubscribeTag',
+  },
+
+  fillTheHashTag: function() {
+    var $tagArea = $('.tag-area');
+
+    for (var mainCate of this.mainCate) {
+      $.ajax({
+        cate: mainCate,
+        method: 'GET',
+        url: `/mobile01_child/${mainCate}`,
+        dataType: 'json',
+        success: function(response) {
+          $tagArea.append(`
+            <br/><br/>
+            <div class="panel panel-danger">
+              <div class="panel-heading">
+                <h3 class="panel-title">${this.cate}</h3>
+              </div>
+            </div>
+            `);
+          for (var i = 0, length = response.length; i < length; ++i) {
+            $tagArea.append(
+              `<button class="btn btn-primary subscribe-btn" type="button" data-tag=${Object.keys(response[i])[0]} style="margin: 4px;" data-loading-text="訂閱中..." autocomplete="off">
+                <i class="fa fa-check-square-o"></i> ${Object.keys(response[i])[0]}
+              </button>`
+            );
+          }
+        },
+
+        error: function(response) {
+          console.log(response);
+        },
+      });
+    }
   },
 
   fillSubCate: function() {
@@ -47,6 +85,7 @@ module.exports = exports = Backbone.View.extend({
 
   subscribeTag: function(e) {
     var tag = $(e.target).data('tag');
+    var $btn = $(e.target).button('loading');
     $.ajax({
       method: 'POST',
       url: `/subscriber/${localStorage.getItem('uid')}`,
@@ -58,17 +97,20 @@ module.exports = exports = Backbone.View.extend({
       success: function(response) {
         alert('訂閱成功!');
         console.log(response);
+        $btn.button('reset');
       },
 
       error: function(response) {
         console.log(response);
+        alert('請再試一次，抱歉:(');
+        $btn.button('reset');
       },
     });
   },
 
   unsubscribeTag: function(e) {
-    console.log('un');
     var tag = $(e.target).data('tag');
+    var $btn = $(e.target).button('loading');
     $.ajax({
       method: 'DELETE',
       url: `/unsubscribe/${localStorage.getItem('uid')}/${tag}`,
@@ -76,10 +118,12 @@ module.exports = exports = Backbone.View.extend({
       success: function(response) {
         alert('取消訂閱成功!');
         console.log(response);
+        $btn.button('reset');
         location.reload();
       },
 
       error: function(response) {
+        $btn.button('reset');
         console.log(response);
       },
     });
