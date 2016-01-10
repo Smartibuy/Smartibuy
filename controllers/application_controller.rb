@@ -174,8 +174,14 @@ class ApplicationController < Sinatra::Base
       @key_num = @keyword[i]["key"].size
       @item.push(JSON.parse(@keyword[i]["key"]))
     end
-    puts @item[0].size
     slim :hotcloud
+  end
+
+  hotcloud_data = lambda do
+    content_type :json
+    request_url = "#{settings.api_server}/#{settings.api_ver}/hot/keyword"
+    results = HTTParty.get(request_url)
+    results.to_json
   end
 
 
@@ -222,5 +228,6 @@ class ApplicationController < Sinatra::Base
   get '/search/:index', &search
 
   get '/hotcloud', &hotcloud
+  get '/hotclouddata', &hotcloud_data
 
 end

@@ -8,21 +8,32 @@
       select#sel.form-control
         -@time.each_index do |i|
           option value="#{@time[i]}" "#{@time[i].year}-#{@time[i].month}-#{@time[i].day}"
-  =@item[0].keys
-  =@item[0].size
+
   div
     h1 熱門關鍵字
     div.hot_keyword
       javascript:
         var num = #{@item[0].size};
-        var arr = [];
+        var frequency_list = [];
         for (var i = 0; i < num; i++) {
-            arr.push("#{@item[0].keys[0]}");
-            alert(arr);
+            frequency_list.push({"text":"#{@item[0].keys[0]}","size":#{@item[0].values[0]}});
         }
+        $.ajax({
+          url: "/hotclouddata",
+          type: "GET",
+          dataType: "json",
+          success: function(response) {
+            
+            alert("SUCCESS!!!");
+          },
+          error: function(response) {
+            console.log(response);
+            alert("ERROR!!!");
+          },
+        });
         
-        var frequency_list = [{"text":"#{@item[0].keys[0]}","size":#{@item[0].values[0]}}];
-    
+        
+        var frequency_list = [{"text":"study","size":80];
         var color = d3.scale.linear()
                 .domain([0,1,2,3,4,5,6,10,15,20,100])
                 .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
@@ -52,20 +63,5 @@
                     .text(function(d) { return d.text; });
         }
         
-        /*$.ajax({
-          url: "/hotcloud",
-          type: "GET",
-          dataType: "json",
-          success: function(Jdata) {
-            alert("SUCCESS!!!");
-          },
-          error: function() {
-            alert("ERROR!!!");
-          },
-          contentType: "application/json"
-        });
-        var NumOfJData = "#{@results}".length; 
-        for (var i = 0; i < NumOfJData; i++) {
-          alert(#{@results}[i]["key"]);
-          alert(#{@results}[i]["time"]);
-        }*/
+        
+        
