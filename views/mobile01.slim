@@ -1,4 +1,16 @@
 .container#main-container
+  <div class="dropdown" style="position: fixed; top: 70px; left: 10px;">
+    <button class="btn btn-danger dropdown-toggle mobile01-dropdown" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      =@tag
+      |  
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu mobile01-dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li><a href="#">Action</a></li>
+      <li><a href="#">Another action</a></li>
+      <li><a href="#">Something else here</a></li>
+    </ul>
+  </div><br/>
   -if @goodlist
     -@goodlist.each do |good|
       .well

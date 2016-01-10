@@ -2,12 +2,47 @@ module.exports = exports = Backbone.View.extend({
   el: $('body'),
   initialize: function() {
     this.mobilePage = 2;
+    this.mainCate = ['電腦資訊', '手持通訊', '攝影器材', '數位家電', '休閒娛樂', '生活用品', '汽車', '機車', '自行車', '男性時尚', '女性流行', '代購與虛擬物品', '房屋地產'];
+
     $(window).scroll(this.touchBottom.bind(this));
+    if (window.location.pathname.split('/')[1] === 'mobile01') {
+      this.fillSubCate();
+    }
   },
 
   events: {
     'click .subscribe-btn': 'subscribeTag',
     'click .unsubscribe-btn': 'unsubscribeTag',
+  },
+
+  fillSubCate: function() {
+    // console.log($(''));
+    var cate = $('.mobile01-dropdown').text().trim();
+    console.log(cate);
+    $.ajax({
+      method: 'GET',
+      url: `/mobile01_child/${cate}`,
+      dataType: 'json',
+      success: function(response) {
+        var innerDropdown = $('.mobile01-dropdown-menu');
+
+        if (this.mainCate.indexOf(cate) < 0) {
+          $('.mobile01-dropdown').addClass('content-hidden');
+        }else {
+          // the cate eixts in the array, so index >= 0;
+          $('.mobile01-dropdown').removeClass('content-hidden');
+        }
+
+        innerDropdown.html('');
+        response.forEach(function(e) {
+          innerDropdown.append(`<li><a href="/mobile01/${Object.keys(e)[0]}">${Object.keys(e)[0]}</a></li>`);
+        });
+      }.bind(this),
+
+      error: function(response) {
+        console.log(response);
+      },
+    });
   },
 
   subscribeTag: function(e) {

@@ -121,6 +121,12 @@ class ApplicationController < Sinatra::Base
     slim :hashtag
   end
 
+  get_cate_childs = lambda do
+    request_url = "#{settings.api_server}/#{settings.api_ver}/mobile01_child/" << URI.escape(params[:cate])
+    results = HTTParty.get(request_url)
+    results.to_json
+  end
+
   subscribe_hastag = lambda do
     request_url = "#{settings.api_server}/#{settings.api_ver}/users/" << params[:id] << "/tags/"
     puts params[:hashtag], params[:id]
@@ -217,6 +223,7 @@ class ApplicationController < Sinatra::Base
   get '/product_comment', &get_product_comments
 
   get '/mobile01/:cate', &get_mobile01_products
+  get '/mobile01_child/:cate', &get_cate_childs
   delete '/unsubscribe/:id/:tag', &unsubscribe_tag
   # get '/statistic', &statistic
   # post '/statistic', &statistic_good
