@@ -1,4 +1,16 @@
 .container#main-container
+  <div class="dropdown" style="position: fixed; top: 70px; left: 10px;">
+    <button class="btn btn-danger dropdown-toggle mobile01-dropdown" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      =@tag
+      |  
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu mobile01-dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li><a href="#">Action</a></li>
+      <li><a href="#">Another action</a></li>
+      <li><a href="#">Something else here</a></li>
+    </ul>
+  </div><br/>
   -if @goodlist
     -@goodlist.each do |good|
       .well
@@ -16,7 +28,7 @@
                     i.fa.fa-money
                     = good["price"].nil? ? ' 尚無價格' :  ' ' << good["price"].to_s
                 a href=good["link"] class="btn btn-info pull-right" target="_blank"
-                  | 商品原網址
+                  | 看更詳細!
               
               .panel-body
                 p
@@ -26,5 +38,9 @@
                     span
                       i.fa.fa-comment
                       = ' ' << good["num"].to_s << ' 則留言'
+                button.btn.btn-primary.subscribe-btn data-loading-text="訂閱中..." type="button" style="margin: 4px;" autocomplete="off" data-tag=@tag
+                  i.fa.fa-check-square-o
+                  |  
+                  =@tag
                       
 <div class="sk-rotating-plane content-hidden"></div>

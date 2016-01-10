@@ -39,9 +39,20 @@ module.exports = exports = Backbone.View.extend({
 
     FacebookLoginInstance.initFacebookSDK(function(err, userData) {
       console.log(err, userData);
+
       if (!err) {
-        _this.fillInUserData(userData);
-        _this.setUserState('login');
+        $.ajax({
+          method: 'GET',
+          url: `/get_user_info/${localStorage.getItem('uid')}`,
+          success: function(response) {
+            _this.fillInUserData(userData, response);
+            _this.setUserState('login');
+          },
+
+          error: function(response) {
+            console.log(response);
+          },
+        });
       } else {
         _this.setUserState('logout');
       }
@@ -54,17 +65,27 @@ module.exports = exports = Backbone.View.extend({
     var loginBtn = _this.loginBtn;
 
     if (state === 'login') {
-      loginBtn.text('登出').attr('data-status', 'login');
+      loginBtn.html('<i class="fa fa-sign-out"></i> 登出').attr('data-status', 'login');
       userInfoBtn.removeClass('content-hidden');
     } else {
-      loginBtn.text('登入').attr('data-status', 'logout');
+      loginBtn.html('<i class="fa fa-sign-in"></i> 登入').attr('data-status', 'logout');
       userInfoBtn.addClass('content-hidden');
     }
   },
 
-  fillInUserData: function(userData) {
+  fillInUserData: function(userData, tagSet) {
+    var tagContainer = $('.tag-container');
     $('.user-name').text(userData.name);
     $('.user-email').html(userData.email);
-    $('.user-img').text(userData.picture.data.url);
+    $('.user-img').attr('src', userData.picture.data.url);
+
+    tagContainer.html('');
+
+    for (var tag of tagSet) {
+      tagContainer.append(
+      `<button class="btn btn-primary unsubscribe-btn" data-loading-text="取消訂閱中..." type="button" data-tag=${tag} style="margin: 4px;" autocomplete="off">
+        <i class="fa fa-check-square-o"></i> ${tag}
+      </button>`);
+    }
   },
 });

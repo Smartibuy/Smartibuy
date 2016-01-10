@@ -2,6 +2,9 @@
   .page-header
     
     -if @keyword
+      <div align='right'>
+        <button type="button" class="btn btn-primary btn-xs" onclick="javascript:location.href='/search_fb/1'">FB</button>
+      </div>
       <div align='center'>
         <h3 id='product-keyword'>#{@keyword} </h3>
       </div>
@@ -39,13 +42,13 @@
           th Link
         -@goodlist.each do |good|
           tr
-            td width='1000'
+            td
               = good['name']
             td width='150'
               = good['price']
             td width='100'
               = good['num']
-            td width='100'
+            td
               = good['update_time']
             td width='50'
               a href= "#{'http://www.mobile01.com/'+ good['link']}"

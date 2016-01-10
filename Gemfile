@@ -12,6 +12,7 @@ gem 'sinatra-activerecord'
 gem 'sinatra-flash'
 gem 'slim'
 gem 'tilt'
+gem 'fuzzy-string-match'
 
 # chart libraries.
 gem "chartkick"

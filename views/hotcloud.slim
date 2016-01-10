@@ -2,29 +2,44 @@
   script src="http://d3js.org/d3.v3.min.js" 
   script src="https://raw.githubusercontent.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js" 
   script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"
-  .col-md-4
-    .form-group
-      label for="sel"  Select day:
-      select#sel.form-control
-        -@time.each_index do |i|
-          option value="#{@time[i]}" "#{@time[i].year}-#{@time[i].month}-#{@time[i].day}"
-
-  div
+  div.row
+    .col-md-4
+      .form-group
+        label for="sel"  選擇日子:
+        select#sel.form-control
+          -@time_key.each_index do |i|
+            option.date-option value="#{@time_key[i]}" "#{@time_key[i]}"    
+  div.row
     h1 熱門關鍵字
-    div.hot_keyword
+    div.hot_keyword style="background: white; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border: 1px solid #eee;"
+  div.row
+    h1 熱門種類
+    div.hot_cate style="background: white; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; border: 1px solid #eee;"
+    
       javascript:
-        var num = #{@item[0].size};
-        var frequency_list = [];
-        for (var i = 0; i < num; i++) {
-            frequency_list.push({"text":"#{@item[0].keys[0]}","size":#{@item[0].values[0]}});
-        }
+        var processed_key = {};
+        var processed_cate = {};
+        
+        $('.date-option').click(function() {
+            console.log ($(this).val());
+            console.log(processed_key[$(this).val()]);
+            genWordCloud(JSON.parse(processed_key[$(this).val()]), '.hot_keyword');
+            genWordCloud(JSON.parse(processed_cate[$(this).val()]), '.hot_cate');
+          });
+        
         $.ajax({
-          url: "/hotclouddata",
+          url: "/hotcloudkey",
           type: "GET",
           dataType: "json",
           success: function(response) {
-            
-            alert("SUCCESS!!!");
+            console.log(response);
+            tmpRes = JSON.parse(response);
+            processed_key = {};
+            for (var i = 0, len = tmpRes.length; i < len; i++) {
+              processed_key[tmpRes[i].time.split(' ')[0]] = tmpRes[i].key;
+            }
+            console.log(processed_key);
+            $('.date-option').click();
           },
           error: function(response) {
             console.log(response);
@@ -32,36 +47,75 @@
           },
         });
         
+        $.ajax({
+          url: "/hotcloudcate",
+          type: "GET",
+          dataType: "json",
+          success: function(response) {
+            console.log(response);
+            tmpRes = JSON.parse(response);
+            processed_cate = {};
+            for (var i = 0, len = tmpRes.length; i < len; i++) {
+              processed_cate[tmpRes[i].time.split(' ')[0]] = tmpRes[i].cate;
+            }
+            console.log(processed_cate);
+            $('.date-option').click();
+          },
+          error: function(response) {
+            console.log(response);
+            alert("ERROR!!!");
+          },
+        });
         
-        var frequency_list = [{"text":"study","size":80];
-        var color = d3.scale.linear()
-                .domain([0,1,2,3,4,5,6,10,15,20,100])
-                .range(["#ddd", "#ccc", "#bbb", "#aaa", "#999", "#888", "#777", "#666", "#555", "#444", "#333", "#222"]);
-      
-        d3.layout.cloud().size([800, 300])
-                .words(frequency_list)
-                .rotate(0)
-                .fontSize(function(d) { return d.size; })
-                .on("end", draw)
-                .start();
-      
-        function draw(words) {
-            d3.select(".hot_keyword").append("svg")
-                    .attr("width", 850)
-                    .attr("height", 350)
-                    .attr("class", "wordcloud")
-                    .append("g")
-                    .attr("transform", "translate(320,200)")
-                    .selectAll("text")
-                    .data(words)
-                    .enter().append("text")
-                    .style("font-size", function(d) { return d.size + "px"; })
-                    .style("fill", function(d, i) { return color(i); })
-                    .attr("transform", function(d) {
-                        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
-                    })
-                    .text(function(d) { return d.text; });
+        function genWordCloud(freqList, selector){
+          var realFreqList = [];
+          $(selector).html('');
+          $(selector).html('');
+          for(var ele in freqList) {
+            realFreqList.push({'text': ele, 'size': freqList[ele]*10});
+          }
+          console.log(freqList);
+          var frequency_list = realFreqList;
+          var color = d3.scale.linear()
+                  .domain([0,1,2,3,4,5,6,10,15,20,100])
+                  .range(["#5f9ea0d", "#8db600", "#ff9966", "#00ffff", "#deb887", "#6495ed", "#00ced1", "#ffd700", "#ff69b4", "#add8e6", "#ffa07a", "#87cefa"]);
+        
+          d3.layout.cloud().size([800, 300])
+                  .words(frequency_list)
+                  .rotate(0)
+                  .fontSize(function(d) { return d.size; })
+                  .on("end", draw)
+                  .start();
+        
+          function draw(words) {
+              d3.select(selector).append("svg")
+                      .attr("width", 850)
+                      .attr("height", 350)
+                      .attr("class", "wordcloud")
+                      .append("g")
+                      .attr("transform", "translate(320,200)")
+                      .selectAll("text")
+                      .data(words)
+                      .enter().append("text")
+                      .style("font-size", function(d) { return d.size + "px"; })
+                      .style("fill", function(d, i) { return color(i); })
+                      .attr("transform", function(d) {
+                          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                      })
+                      .text(function(d) { return d.text; });
+          }
         }
+      
+
+            
+            
+            
+            
+            
+            
+        
+        
+        
         
         
         

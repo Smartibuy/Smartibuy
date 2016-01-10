@@ -1,0 +1,47 @@
+.container
+  .page-header
+    
+    -if @keyword
+      <div align='right'>
+      <button type="button" class="btn btn-primary btn-xs" onclick="javascript:location.href='/search/1'">小惡魔市集</button>
+      </div>
+      <div align='center'>
+        <h3 id='product-keyword'>#{@keyword} </h3>
+      </div>
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">#{@group}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="/search_fb/1">桃竹苗跳蚤市場</a></li>
+          <li><a href="/search_fb/2">新竹二手跳蚤市場</a></li>
+          <li><a href="/search_fb/3">桃園中壢買賣</a></li>
+          <li><a href="/search_fb/4">大台南二手交流、買賣公開社團</a></li>
+          <li><a href="/search_fb/5">高雄二手買賣交流團</a></li>
+          <li><a href="/search_fb/6">高屏區二手買賣</a></li>
+          <li><a href="/search_fb/7">清交二手貨倉</a></li>
+          <li><a href="/search_fb/8">中教大二手買賣市場</a></li>
+          <li><a href="/search_fb/9">交大二手大賣場</a></li>
+        </ul>
+      </div>
+      
+      br
+    
+    -if @results
+    table.table
+      tbody
+        tr
+          th 商品名稱
+          th 價錢
+          th 產品網址
+        -@results.each do |good|
+          tr
+            td
+              = good["title"].nil? ? '無產品名稱' : good["title"]
+            td width='150'
+              = good['price'].nil? ? '請查看敘述' : good['price']
+            td width='100'
+              a href= good["origin_url"]
+                i.fa.fa-external-link
+          
+    
