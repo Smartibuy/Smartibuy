@@ -49,10 +49,35 @@ $(document).ready(function() {
   });
 
   var ProductView = Backbone.View.extend({
-    el: $('#waterfall-container'),
+    el: $('body'),
     initialize: function() {
       this.mobilePage = 2;
       $(window).scroll(this.touchBottom.bind(this));
+    },
+
+    events: {
+      'click .subscribe-btn': 'subscribeTag',
+    },
+
+    subscribeTag: function(e) {
+      var tag = $(e.target).data('tag');
+      $.ajax({
+        method: 'POST',
+        url: `/subscriber/${localStorage.getItem('uid')}`,
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: {
+          hashtag: tag,
+        },
+
+        success: function(response) {
+          alert('訂閱成功!');
+          console.log(response);
+        },
+
+        error: function(response) {
+          console.log(response);
+        },
+      });
     },
 
     touchBottom: function() {

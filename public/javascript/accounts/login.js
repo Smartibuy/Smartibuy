@@ -70,6 +70,8 @@ module.exports = exports = {
       },
     });
 
+    // Store UserKey
+    localStorage.setItem('uid', userData.id);
     this.callback(null, userData);
   },
 
