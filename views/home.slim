@@ -13,6 +13,8 @@
             .panel.panel-info
               .panel-heading
                 h4.media-heading style="display: inline-block"
+                  i.fa.fa-hand-o-right
+                  |  
                   = good["title"].nil? ? '無產品名稱' : good["title"]
                   br
                   span
@@ -23,6 +25,8 @@
               
               .panel-body
                 p.text-right
+                  i.fa.fa-heart-o
+                  |  
                   = good["from"]["name"].nil? ? '無發佈者' : '來自 ' << good["from"]["name"] << ' 朋友的好物!'
                 p
                   == good["message"].nil? ? '無敘述' : good["message"].gsub(/\n/, '<br/>')

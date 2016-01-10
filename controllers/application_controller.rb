@@ -64,7 +64,7 @@ class ApplicationController < Sinatra::Base
   # Route for fetching products by page and timestamp.
   fetch_prodocts = lambda do
     content_type :json
-    id = params[:groupID].nil? ? '817620721658179' : params[:groupID]
+    id = params[:groupID].nil? ? '107793636088378' : params[:groupID]
 
     request_url = "#{settings.api_server}/#{settings.api_ver}/fb_data/" << id << "/goods?timestamp=#{params[:timestamp]}&page=#{params[:page]}"
     results = HTTParty.get(request_url)
@@ -89,7 +89,8 @@ class ApplicationController < Sinatra::Base
   end
 
   get_mobile01_products = lambda do
-    request_url = "#{settings.api_server}/#{settings.api_ver}/mobile01/" << URI.escape(params[:cate])
+    puts params[:page].to_s
+    request_url = "#{settings.api_server}/#{settings.api_ver}/mobile01/" << URI.escape(params[:cate]) << "?page=" << params[:page].to_s
     results = HTTParty.get(request_url)
 
     results.each do |result|
@@ -97,8 +98,12 @@ class ApplicationController < Sinatra::Base
       result
     end
 
-    @goodlist = results
-    slim :mobile01
+    if params[:page].nil?
+      @goodlist = results
+      slim :mobile01
+    else
+      results.to_json
+    end
   end
 
   statistic = lambda do
